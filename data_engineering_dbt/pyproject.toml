@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "coffee-data-platform"
+version = "0.1.0"
+description = "CLI ingestion tool for coffee shop data"
+authors = ["Khangelani"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "*"
+google-cloud-bigquery = "*"
+click = "*"
+pyyaml = "*"
+pyarrow = "^24.0.0"
+
+[tool.poetry.scripts]
+ingest = "ingestion.cli:load"
