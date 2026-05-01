@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: raw
+    database: coffee-shop-updated
+    schema: coffee_raw
+    description: "Raw ingestion layer loaded via Python CLI"
+
+    tables:
+      - name: raw_lower_manhattan
+        description: "Raw transactional data from Lower Manhattan store"
+        columns:
+          - name: transaction_id
+            description: "Unique transaction identifier from source system"
+          - name: transaction_date
+            description: "Transaction date (string format)"
+          - name: transaction_time
+            description: "Transaction time"
+          - name: transaction_qty
+            description: "Number of items purchased"
+          - name: unit_price
+            description: "Price per unit"
+          - name: ingestion_timestamp
+            description: "Timestamp when record was ingested into BigQuery"

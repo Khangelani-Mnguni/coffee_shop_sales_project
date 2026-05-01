@@ -1,0 +1,35 @@
+name: dbt Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dbt-prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - run: pip install dbt-bigquery
+
+      - name: Decode GCP key  
+        run: echo "${{ secrets.GCP_KEY }}" | base64 --decode > key.json
+
+      - name: Set environment
+        run: |
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/key.json" >> $GITHUB_ENV
+          echo "DBT_PROFILES_DIR=$(pwd)/transform/coffee_project" >> $GITHUB_ENV
+
+      - name: Run dbt
+        run: |
+          cd transform/coffee_project
+          dbt deps
+          dbt run --target prod
+          dbt test --target prod
+          
