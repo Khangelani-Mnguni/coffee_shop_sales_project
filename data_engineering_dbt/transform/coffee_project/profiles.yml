@@ -7,7 +7,7 @@ coffee_project:
       project: coffee-shop-updated
       dataset: coffee_dev
       threads: 4
-      keyfile: /Users/mac/Documents/projects/key.json
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
 
     prod:
       type: bigquery
@@ -15,4 +15,4 @@ coffee_project:
       project: coffee-shop-updated
       dataset: coffee_prod
       threads: 4
-      keyfile: /Users/mac/Documents/projects/key.json
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
