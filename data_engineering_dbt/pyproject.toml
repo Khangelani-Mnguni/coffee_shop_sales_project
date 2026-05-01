@@ -3,6 +3,7 @@ name = "coffee-data-platform"
 version = "0.1.0"
 description = "CLI ingestion tool for coffee shop data"
 authors = ["Khangelani"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"

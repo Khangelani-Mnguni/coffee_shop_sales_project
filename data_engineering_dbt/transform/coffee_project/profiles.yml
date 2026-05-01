@@ -1,0 +1,18 @@
+coffee_project:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: coffee-shop-updated
+      dataset: coffee_dev
+      threads: 4
+      keyfile: /Users/mac/Documents/projects/key.json
+
+    prod:
+      type: bigquery
+      method: service-account
+      project: coffee-shop-updated
+      dataset: coffee_prod
+      threads: 4
+      keyfile: /Users/mac/Documents/projects/key.json
