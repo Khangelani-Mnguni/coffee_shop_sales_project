@@ -24,11 +24,11 @@ jobs:
       - name: Set environment
         run: |
           echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/key.json" >> $GITHUB_ENV
-          echo "DBT_PROFILES_DIR=$(pwd)/transform/coffee_project" >> $GITHUB_ENV
+          echo "DBT_PROFILES_DIR=$(pwd)data_engineering_dbt/transform/coffee_project" >> $GITHUB_ENV
 
       - name: Run dbt
         run: |
-          cd transform/coffee_project
+          cd data_engineering_dbt/transform/coffee_project
           dbt deps
           dbt run --target prod
           dbt test --target prod
