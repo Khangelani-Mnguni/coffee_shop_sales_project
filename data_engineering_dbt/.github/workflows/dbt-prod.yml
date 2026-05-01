@@ -32,3 +32,4 @@ jobs:
           dbt deps
           dbt run --target prod
           dbt test --target prod
+          
