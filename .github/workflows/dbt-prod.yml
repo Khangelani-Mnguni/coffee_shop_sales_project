@@ -24,7 +24,12 @@ jobs:
       - name: Set environment
         run: |
           echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/key.json" >> $GITHUB_ENV
-          echo "DBT_PROFILES_DIR=$(pwd)data_engineering_dbt/transform/coffee_project" >> $GITHUB_ENV
+          echo "DBT_PROFILES_DIR=$(pwd)/data_engineering_dbt/transform/coffee_project" >> $GITHUB_ENV
+
+      - name: Debug paths
+        run: |
+            pwd
+            ls -R
 
       - name: Run dbt
         run: |
