@@ -1,0 +1,282 @@
+[2026-05-01T14:08:45.632+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T14:08:45.679+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T14:08:45.696+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T14:08:45.698+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-01T14:08:45.714+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): ingest_data> on 2025-01-02 00:00:00+00:00
+[2026-05-01T14:08:45.724+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=214) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T14:08:45.727+0000] {standard_task_runner.py:64} INFO - Started process 216 to run task
+[2026-05-01T14:08:45.727+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'ingest_data', 'scheduled__2025-01-02T00:00:00+00:00', '--job-id', '12', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmp49nyjd_z']
+[2026-05-01T14:08:45.729+0000] {standard_task_runner.py:91} INFO - Job 12: Subtask ingest_data
+[2026-05-01T14:08:45.788+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [running]> on host fae0f868be76
+[2026-05-01T14:08:45.882+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='ingest_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-02T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-02T00:00:00+00:00'
+[2026-05-01T14:08:45.886+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T14:08:45.895+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 1 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T14:08:45.898+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 2 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T14:08:45.900+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 3 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T14:08:45.902+0000] {_default.py:338} WARNING - Authentication failed using Compute Engine authentication due to unavailable metadata server.
+[2026-05-01T14:08:45.903+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T14:08:45.905+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/coffee_pipeline.py", line 30, in process_file
+    client = bigquery.Client()
+             ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/client.py", line 241, in __init__
+    super(Client, self).__init__(
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 320, in __init__
+    _ClientProjectMixin.__init__(self, project=project, credentials=credentials)
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 268, in __init__
+    project = self._determine_default(project)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 287, in _determine_default
+    return _determine_default_project(project)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/_helpers/__init__.py", line 152, in _determine_default_project
+    _, project = google.auth.default()
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/auth/_default.py", line 691, in default
+    raise exceptions.DefaultCredentialsError(_CLOUD_SDK_MISSING_CREDENTIALS)
+google.auth.exceptions.DefaultCredentialsError: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.
+[2026-05-01T14:08:45.920+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=coffee_pipeline, task_id=ingest_data, run_id=scheduled__2025-01-02T00:00:00+00:00, execution_date=20250102T000000, start_date=20260501T140845, end_date=20260501T140845
+[2026-05-01T14:08:45.935+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 12 for task ingest_data (Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.; 216)
+[2026-05-01T14:08:45.985+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T14:08:46.030+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T14:08:46.038+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T14:28:56.530+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T14:28:56.567+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T14:28:56.584+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T14:28:56.585+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-01T14:28:56.621+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): ingest_data> on 2025-01-02 00:00:00+00:00
+[2026-05-01T14:28:56.633+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=192) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T14:28:56.636+0000] {standard_task_runner.py:64} INFO - Started process 201 to run task
+[2026-05-01T14:28:56.648+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'ingest_data', 'scheduled__2025-01-02T00:00:00+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpgtuns9kv']
+[2026-05-01T14:28:56.650+0000] {standard_task_runner.py:91} INFO - Job 8: Subtask ingest_data
+[2026-05-01T14:28:56.981+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [running]> on host 99adfb056df4
+[2026-05-01T14:28:57.140+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='ingest_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-02T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-02T00:00:00+00:00'
+[2026-05-01T14:28:57.149+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T14:28:57.165+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 1 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T14:28:57.167+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 2 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T14:28:57.171+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 3 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T14:28:57.175+0000] {_default.py:338} WARNING - Authentication failed using Compute Engine authentication due to unavailable metadata server.
+[2026-05-01T14:28:57.176+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T14:28:57.179+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/coffee_pipeline.py", line 30, in process_file
+    client = bigquery.Client()
+             ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/client.py", line 241, in __init__
+    super(Client, self).__init__(
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 320, in __init__
+    _ClientProjectMixin.__init__(self, project=project, credentials=credentials)
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 268, in __init__
+    project = self._determine_default(project)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 287, in _determine_default
+    return _determine_default_project(project)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/_helpers/__init__.py", line 152, in _determine_default_project
+    _, project = google.auth.default()
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/auth/_default.py", line 691, in default
+    raise exceptions.DefaultCredentialsError(_CLOUD_SDK_MISSING_CREDENTIALS)
+google.auth.exceptions.DefaultCredentialsError: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.
+[2026-05-01T14:28:57.210+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=coffee_pipeline, task_id=ingest_data, run_id=scheduled__2025-01-02T00:00:00+00:00, execution_date=20250102T000000, start_date=20260501T142856, end_date=20260501T142857
+[2026-05-01T14:28:57.233+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 8 for task ingest_data (Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.; 201)
+[2026-05-01T14:28:57.292+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T14:28:57.343+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T14:28:57.352+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T15:01:15.092+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T15:01:15.118+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T15:01:15.128+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T15:01:15.129+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-01T15:01:15.144+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): ingest_data> on 2025-01-02 00:00:00+00:00
+[2026-05-01T15:01:15.153+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=308) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T15:01:15.155+0000] {standard_task_runner.py:64} INFO - Started process 310 to run task
+[2026-05-01T15:01:15.156+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'ingest_data', 'scheduled__2025-01-02T00:00:00+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpnulpppk6']
+[2026-05-01T15:01:15.159+0000] {standard_task_runner.py:91} INFO - Job 8: Subtask ingest_data
+[2026-05-01T15:01:15.213+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [running]> on host d65e6a7fdfeb
+[2026-05-01T15:01:15.302+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='ingest_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-02T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-02T00:00:00+00:00'
+[2026-05-01T15:01:15.305+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T15:01:15.312+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 1 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T15:01:15.314+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 2 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T15:01:15.316+0000] {_metadata.py:139} WARNING - Compute Engine Metadata server unavailable on attempt 3 of 3. Reason: [Errno 111] Connection refused
+[2026-05-01T15:01:15.318+0000] {_default.py:338} WARNING - Authentication failed using Compute Engine authentication due to unavailable metadata server.
+[2026-05-01T15:01:15.319+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T15:01:15.321+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/coffee_pipeline.py", line 30, in process_file
+    client = bigquery.Client()
+             ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/client.py", line 241, in __init__
+    super(Client, self).__init__(
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 320, in __init__
+    _ClientProjectMixin.__init__(self, project=project, credentials=credentials)
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 268, in __init__
+    project = self._determine_default(project)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/client/__init__.py", line 287, in _determine_default
+    return _determine_default_project(project)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/_helpers/__init__.py", line 152, in _determine_default_project
+    _, project = google.auth.default()
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/auth/_default.py", line 691, in default
+    raise exceptions.DefaultCredentialsError(_CLOUD_SDK_MISSING_CREDENTIALS)
+google.auth.exceptions.DefaultCredentialsError: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.
+[2026-05-01T15:01:15.335+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=coffee_pipeline, task_id=ingest_data, run_id=scheduled__2025-01-02T00:00:00+00:00, execution_date=20250102T000000, start_date=20260501T150115, end_date=20260501T150115
+[2026-05-01T15:01:15.349+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 8 for task ingest_data (Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.; 310)
+[2026-05-01T15:01:15.374+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T15:01:15.398+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T15:01:15.404+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T17:35:02.790+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T17:35:02.886+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T17:35:02.945+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T17:35:02.948+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-01T17:35:03.013+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): ingest_data> on 2025-01-02 00:00:00+00:00
+[2026-05-01T17:35:03.054+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=86) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T17:35:03.065+0000] {standard_task_runner.py:64} INFO - Started process 95 to run task
+[2026-05-01T17:35:03.091+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'ingest_data', 'scheduled__2025-01-02T00:00:00+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmps6cqgs0f']
+[2026-05-01T17:35:03.103+0000] {standard_task_runner.py:91} INFO - Job 10: Subtask ingest_data
+[2026-05-01T17:35:03.274+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [running]> on host ***-worker
+[2026-05-01T17:35:03.894+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='ingest_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-02T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-02T00:00:00+00:00'
+[2026-05-01T17:35:03.902+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T17:35:37.735+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T17:35:38.059+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/coffee_pipeline.py", line 55, in process_file
+    job.result()
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/job/base.py", line 971, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Provided Schema does not match Table coffee-shop-updated:coffee_raw.raw_lower_manhattan. Field transaction_id has changed type from INTEGER to FLOAT; reason: invalid, message: Provided Schema does not match Table coffee-shop-updated:coffee_raw.raw_lower_manhattan. Field transaction_id has changed type from INTEGER to FLOAT; reason: invalid, message: It looks like you are appending to an existing table with autodetect enabled. Disabling autodetect may resolve this.
+[2026-05-01T17:35:38.208+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=coffee_pipeline, task_id=ingest_data, run_id=scheduled__2025-01-02T00:00:00+00:00, execution_date=20250102T000000, start_date=20260501T173502, end_date=20260501T173538
+[2026-05-01T17:35:38.640+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 10 for task ingest_data (400 Provided Schema does not match Table coffee-shop-updated:coffee_raw.raw_lower_manhattan. Field transaction_id has changed type from INTEGER to FLOAT; reason: invalid, message: Provided Schema does not match Table coffee-shop-updated:coffee_raw.raw_lower_manhattan. Field transaction_id has changed type from INTEGER to FLOAT; reason: invalid, message: It looks like you are appending to an existing table with autodetect enabled. Disabling autodetect may resolve this.; 95)
+[2026-05-01T17:35:38.852+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T17:35:38.955+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T17:35:38.974+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T19:02:25.415+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T19:02:25.499+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T19:02:25.542+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [queued]>
+[2026-05-01T19:02:25.545+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-01T19:02:25.612+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): ingest_data> on 2025-01-02 00:00:00+00:00
+[2026-05-01T19:02:25.650+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=355) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T19:02:25.660+0000] {standard_task_runner.py:64} INFO - Started process 357 to run task
+[2026-05-01T19:02:25.674+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'ingest_data', 'scheduled__2025-01-02T00:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmp_aaexzzw']
+[2026-05-01T19:02:25.680+0000] {standard_task_runner.py:91} INFO - Job 11: Subtask ingest_data
+[2026-05-01T19:02:25.905+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-02T00:00:00+00:00 [running]> on host ***-worker
+[2026-05-01T19:02:26.205+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='ingest_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-02T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-02T00:00:00+00:00'
+[2026-05-01T19:02:26.227+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T19:02:26.633+0000] {logging_mixin.py:188} INFO - Processing file: /opt/***/project/data/Astoria.csv → coffee-shop-updated.coffee_raw.raw_astoria
+[2026-05-01T19:02:26.646+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T19:02:26.649+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/coffee_pipeline.py", line 63, in process_file
+    df = pd.read_csv(file)
+         ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 611, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1448, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1705, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/common.py", line 863, in get_handle
+    handle = open(
+             ^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/airflow/project/data/Astoria.csv'
+[2026-05-01T19:02:26.703+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=coffee_pipeline, task_id=ingest_data, run_id=scheduled__2025-01-02T00:00:00+00:00, execution_date=20250102T000000, start_date=20260501T190225, end_date=20260501T190226
+[2026-05-01T19:02:26.754+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 11 for task ingest_data ([Errno 2] No such file or directory: '/opt/airflow/project/data/Astoria.csv'; 357)
+[2026-05-01T19:02:26.824+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T19:02:26.953+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T19:02:26.965+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

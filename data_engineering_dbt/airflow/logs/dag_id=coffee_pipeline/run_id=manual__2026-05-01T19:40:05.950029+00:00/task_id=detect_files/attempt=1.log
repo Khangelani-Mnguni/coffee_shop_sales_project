@@ -1,0 +1,19 @@
+[2026-05-01T19:41:30.046+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T19:41:30.185+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files manual__2026-05-01T19:40:05.950029+00:00 [queued]>
+[2026-05-01T19:41:30.214+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files manual__2026-05-01T19:40:05.950029+00:00 [queued]>
+[2026-05-01T19:41:30.216+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T19:41:30.271+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2026-05-01 19:40:05.950029+00:00
+[2026-05-01T19:41:30.312+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=989) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T19:41:30.314+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'manual__2026-05-01T19:40:05.950029+00:00', '--job-id', '36', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpf8xlffeh']
+[2026-05-01T19:41:30.318+0000] {standard_task_runner.py:64} INFO - Started process 991 to run task
+[2026-05-01T19:41:30.325+0000] {standard_task_runner.py:91} INFO - Job 36: Subtask detect_files
+[2026-05-01T19:41:30.595+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files manual__2026-05-01T19:40:05.950029+00:00 [running]> on host ***-worker
+[2026-05-01T19:41:31.030+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2026-05-01T19:40:05.950029+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-01T19:40:05.950029+00:00'
+[2026-05-01T19:41:31.040+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T19:41:31.128+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T19:41:31.131+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T19:41:31.168+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=manual__2026-05-01T19:40:05.950029+00:00, execution_date=20260501T194005, start_date=20260501T194130, end_date=20260501T194131
+[2026-05-01T19:41:31.273+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T19:41:31.306+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

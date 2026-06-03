@@ -1,0 +1,40 @@
+[2026-05-01T15:23:07.930+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T15:23:07.962+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.dbt_staging scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T15:23:07.973+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.dbt_staging scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T15:23:07.975+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-01T15:23:07.992+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): dbt_staging> on 2025-01-01 00:00:00+00:00
+[2026-05-01T15:23:08.002+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=167) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T15:23:08.008+0000] {standard_task_runner.py:64} INFO - Started process 169 to run task
+[2026-05-01T15:23:08.008+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'dbt_staging', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpjfi985b1']
+[2026-05-01T15:23:08.010+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask dbt_staging
+[2026-05-01T15:23:08.081+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.dbt_staging scheduled__2025-01-01T00:00:00+00:00 [running]> on host 689d755758de
+[2026-05-01T15:23:08.198+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='dbt_staging' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T15:23:08.201+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T15:23:08.202+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-01T15:23:08.204+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        cd /opt/***/project/transform/coffee_project\n        dbt run --select staging --target prod\n        ']
+[2026-05-01T15:23:08.220+0000] {subprocess.py:86} INFO - Output:
+[2026-05-01T15:23:08.224+0000] {subprocess.py:93} INFO - /usr/bin/bash: line 2: cd: /opt/***/project/transform/coffee_project: No such file or directory
+[2026-05-01T15:23:08.225+0000] {subprocess.py:93} INFO - /usr/bin/bash: line 3: dbt: command not found
+[2026-05-01T15:23:08.226+0000] {subprocess.py:97} INFO - Command exited with return code 127
+[2026-05-01T15:23:08.229+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T15:23:08.246+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 127.
+[2026-05-01T15:23:08.260+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=coffee_pipeline, task_id=dbt_staging, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T152307, end_date=20260501T152308
+[2026-05-01T15:23:08.286+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 6 for task dbt_staging (Bash command failed. The command returned a non-zero exit code 127.; 169)
+[2026-05-01T15:23:08.309+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T15:23:08.338+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T15:23:08.345+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

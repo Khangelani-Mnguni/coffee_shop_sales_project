@@ -1,0 +1,160 @@
+[2026-05-01T13:58:26.430+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T13:58:26.459+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T13:58:26.476+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T13:58:26.480+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T13:58:26.511+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T13:58:26.525+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=84) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T13:58:26.528+0000] {standard_task_runner.py:64} INFO - Started process 86 to run task
+[2026-05-01T13:58:26.528+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpu22f6sp7']
+[2026-05-01T13:58:26.532+0000] {standard_task_runner.py:91} INFO - Job 7: Subtask detect_files
+[2026-05-01T13:58:26.594+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host fae0f868be76
+[2026-05-01T13:58:26.701+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T13:58:26.704+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T13:58:26.735+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T13:58:26.736+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T13:58:26.750+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T135826, end_date=20260501T135826
+[2026-05-01T13:58:26.789+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T13:58:26.819+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T13:58:26.822+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T14:18:35.577+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T14:18:35.611+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T14:18:35.621+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T14:18:35.623+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T14:18:35.646+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T14:18:35.658+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=57) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T14:18:35.661+0000] {standard_task_runner.py:64} INFO - Started process 59 to run task
+[2026-05-01T14:18:35.661+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpu9mzi4dm']
+[2026-05-01T14:18:35.665+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask detect_files
+[2026-05-01T14:18:35.731+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host 99adfb056df4
+[2026-05-01T14:18:35.839+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T14:18:35.844+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T14:18:35.866+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T14:18:35.868+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T14:18:35.893+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T141835, end_date=20260501T141835
+[2026-05-01T14:18:35.963+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T14:18:36.004+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T14:18:36.011+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T14:50:56.171+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T14:50:56.199+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T14:50:56.210+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T14:50:56.211+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T14:50:56.228+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T14:50:56.237+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=172) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T14:50:56.239+0000] {standard_task_runner.py:64} INFO - Started process 174 to run task
+[2026-05-01T14:50:56.240+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmp3g157fa6']
+[2026-05-01T14:50:56.242+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask detect_files
+[2026-05-01T14:50:56.315+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host d65e6a7fdfeb
+[2026-05-01T14:50:56.435+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T14:50:56.439+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T14:50:56.459+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T14:50:56.461+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T14:50:56.476+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T145056, end_date=20260501T145056
+[2026-05-01T14:50:56.539+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T14:50:56.578+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T14:50:56.582+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T15:17:59.062+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T15:17:59.100+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T15:17:59.116+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T15:17:59.120+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T15:17:59.142+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T15:17:59.153+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=92) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T15:17:59.157+0000] {standard_task_runner.py:64} INFO - Started process 94 to run task
+[2026-05-01T15:17:59.164+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmp0tgiw1c7']
+[2026-05-01T15:17:59.166+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask detect_files
+[2026-05-01T15:17:59.229+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host 689d755758de
+[2026-05-01T15:17:59.332+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T15:17:59.336+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T15:17:59.353+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T15:17:59.355+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T15:17:59.367+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T151759, end_date=20260501T151759
+[2026-05-01T15:17:59.416+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T15:17:59.450+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T15:17:59.455+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T17:01:36.267+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T17:01:36.302+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T17:01:36.312+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T17:01:36.314+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T17:01:36.338+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T17:01:36.365+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=150) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T17:01:36.374+0000] {standard_task_runner.py:64} INFO - Started process 152 to run task
+[2026-05-01T17:01:36.371+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmp9ag2g8ij']
+[2026-05-01T17:01:36.380+0000] {standard_task_runner.py:91} INFO - Job 4: Subtask detect_files
+[2026-05-01T17:01:36.457+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host 1e1bd9f4f27b
+[2026-05-01T17:01:36.622+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T17:01:36.625+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T17:01:36.673+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T17:01:36.676+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T17:01:36.691+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T170136, end_date=20260501T170136
+[2026-05-01T17:01:36.923+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T17:01:37.049+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T17:01:37.058+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T17:17:51.384+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T17:17:51.477+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T17:17:51.500+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T17:17:51.508+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T17:17:51.552+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T17:17:51.588+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=164) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T17:17:51.642+0000] {standard_task_runner.py:64} INFO - Started process 166 to run task
+[2026-05-01T17:17:51.616+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpwn2ssc9i']
+[2026-05-01T17:17:51.656+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask detect_files
+[2026-05-01T17:17:51.836+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host ***-worker
+[2026-05-01T17:17:52.050+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T17:17:52.055+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T17:17:52.089+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T17:17:52.091+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T17:17:52.115+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T171751, end_date=20260501T171752
+[2026-05-01T17:17:52.194+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T17:17:52.248+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T17:17:52.257+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T18:09:10.740+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T18:09:10.780+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T18:09:10.792+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T18:09:10.794+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T18:09:10.815+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T18:09:10.833+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=95) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T18:09:10.838+0000] {standard_task_runner.py:64} INFO - Started process 97 to run task
+[2026-05-01T18:09:10.840+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpk4fs0716']
+[2026-05-01T18:09:10.843+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask detect_files
+[2026-05-01T18:09:10.916+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host ***-worker
+[2026-05-01T18:09:11.025+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T18:09:11.028+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T18:09:11.054+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T18:09:11.055+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T18:09:11.067+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T180910, end_date=20260501T180911
+[2026-05-01T18:09:11.099+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T18:09:11.135+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T18:09:11.141+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-05-01T18:44:00.411+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T18:44:00.775+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T18:44:00.879+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [queued]>
+[2026-05-01T18:44:00.882+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T18:44:00.983+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): detect_files> on 2025-01-01 00:00:00+00:00
+[2026-05-01T18:44:01.058+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=127) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T18:44:01.075+0000] {standard_task_runner.py:64} INFO - Started process 135 to run task
+[2026-05-01T18:44:01.084+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'detect_files', 'scheduled__2025-01-01T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpf9i7nor8']
+[2026-05-01T18:44:01.097+0000] {standard_task_runner.py:91} INFO - Job 3: Subtask detect_files
+[2026-05-01T18:44:01.502+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.detect_files scheduled__2025-01-01T00:00:00+00:00 [running]> on host ***-worker
+[2026-05-01T18:44:02.587+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='detect_files' AIRFLOW_CTX_EXECUTION_DATE='2025-01-01T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-01T00:00:00+00:00'
+[2026-05-01T18:44:02.596+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T18:44:02.846+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-05-01T18:44:02.863+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T18:44:02.954+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=detect_files, run_id=scheduled__2025-01-01T00:00:00+00:00, execution_date=20250101T000000, start_date=20260501T184400, end_date=20260501T184402
+[2026-05-01T18:44:03.195+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T18:44:03.757+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T18:44:03.768+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

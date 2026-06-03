@@ -1,0 +1,60 @@
+[2026-05-01T19:09:10.569+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T19:09:10.634+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.dbt_staging manual__2026-05-01T19:01:59.431408+00:00 [queued]>
+[2026-05-01T19:09:10.662+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.dbt_staging manual__2026-05-01T19:01:59.431408+00:00 [queued]>
+[2026-05-01T19:09:10.666+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-05-01T19:09:10.710+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): dbt_staging> on 2026-05-01 19:01:59.431408+00:00
+[2026-05-01T19:09:10.732+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=452) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T19:09:10.739+0000] {standard_task_runner.py:64} INFO - Started process 454 to run task
+[2026-05-01T19:09:10.754+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'dbt_staging', 'manual__2026-05-01T19:01:59.431408+00:00', '--job-id', '15', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmp4c4n9lxa']
+[2026-05-01T19:09:10.759+0000] {standard_task_runner.py:91} INFO - Job 15: Subtask dbt_staging
+[2026-05-01T19:09:10.927+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.dbt_staging manual__2026-05-01T19:01:59.431408+00:00 [running]> on host ***-worker
+[2026-05-01T19:09:11.242+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='dbt_staging' AIRFLOW_CTX_EXECUTION_DATE='2026-05-01T19:01:59.431408+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-01T19:01:59.431408+00:00'
+[2026-05-01T19:09:11.249+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T19:09:11.254+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-01T19:09:11.258+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        cd /opt/***/project/transform/coffee_project &&\n        dbt run --select staging --target prod\n        ']
+[2026-05-01T19:09:11.305+0000] {subprocess.py:86} INFO - Output:
+[2026-05-01T19:09:25.655+0000] {subprocess.py:93} INFO - [0m19:09:25  Running with dbt=1.8.7
+[2026-05-01T19:09:33.897+0000] {subprocess.py:93} INFO - [0m19:09:33  Registered adapter: bigquery=1.9.2
+[2026-05-01T19:09:34.904+0000] {subprocess.py:93} INFO - [0m19:09:34  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+[2026-05-01T19:09:34.907+0000] {subprocess.py:93} INFO - There are 1 unused configuration paths:
+[2026-05-01T19:09:34.911+0000] {subprocess.py:93} INFO - - models.coffee_project.example
+[2026-05-01T19:09:35.799+0000] {subprocess.py:93} INFO - [0m19:09:35  Found 5 models, 2 data tests, 1 source, 489 macros
+[2026-05-01T19:09:35.818+0000] {subprocess.py:93} INFO - [0m19:09:35
+[2026-05-01T19:09:39.840+0000] {subprocess.py:93} INFO - [0m19:09:39  Concurrency: 4 threads (target='prod')
+[2026-05-01T19:09:39.851+0000] {subprocess.py:93} INFO - [0m19:09:39
+[2026-05-01T19:09:39.902+0000] {subprocess.py:93} INFO - [0m19:09:39  1 of 1 START sql view model coffee_prod.staging_lower_manhattan ................ [RUN]
+[2026-05-01T19:09:43.550+0000] {subprocess.py:93} INFO - [0m19:09:43  BigQuery adapter: https://console.cloud.google.com/bigquery?project=coffee-shop-updated&j=bq:US:187073fc-6a6e-4879-ac39-45f87016d31f&page=queryresults
+[2026-05-01T19:09:43.597+0000] {subprocess.py:93} INFO - [0m19:09:43  1 of 1 ERROR creating sql view model coffee_prod.staging_lower_manhattan ....... [[31mERROR[0m in 3.67s]
+[2026-05-01T19:09:43.716+0000] {subprocess.py:93} INFO - [0m19:09:43
+[2026-05-01T19:09:43.723+0000] {subprocess.py:93} INFO - [0m19:09:43  Finished running 1 view model in 0 hours 0 minutes and 7.89 seconds (7.89s).
+[2026-05-01T19:09:44.094+0000] {subprocess.py:93} INFO - [0m19:09:44
+[2026-05-01T19:09:44.102+0000] {subprocess.py:93} INFO - [0m19:09:44  [31mCompleted with 1 error and 0 warnings:[0m
+[2026-05-01T19:09:44.109+0000] {subprocess.py:93} INFO - [0m19:09:44
+[2026-05-01T19:09:44.121+0000] {subprocess.py:93} INFO - [0m19:09:44    Database Error in model staging_lower_manhattan (models/staging/staging_lower_manhattan.sql)
+[2026-05-01T19:09:44.125+0000] {subprocess.py:93} INFO -   Unrecognized name: ingestion_timestamp at [20:22]
+[2026-05-01T19:09:44.127+0000] {subprocess.py:93} INFO -   compiled code at target/run/coffee_project/models/staging/staging_lower_manhattan.sql
+[2026-05-01T19:09:44.132+0000] {subprocess.py:93} INFO - [0m19:09:44
+[2026-05-01T19:09:44.137+0000] {subprocess.py:93} INFO - [0m19:09:44  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
+[2026-05-01T19:09:46.952+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-05-01T19:09:46.955+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T19:09:46.979+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-05-01T19:09:46.991+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=coffee_pipeline, task_id=dbt_staging, run_id=manual__2026-05-01T19:01:59.431408+00:00, execution_date=20260501T190159, start_date=20260501T190910, end_date=20260501T190946
+[2026-05-01T19:09:47.026+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 15 for task dbt_staging (Bash command failed. The command returned a non-zero exit code 1.; 454)
+[2026-05-01T19:09:47.085+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T19:09:47.137+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T19:09:47.151+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
