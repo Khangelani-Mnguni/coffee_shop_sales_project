@@ -1,0 +1,70 @@
+[2026-05-01T19:39:11.711+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T19:39:11.810+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-06T00:00:00+00:00 [queued]>
+[2026-05-01T19:39:11.850+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-06T00:00:00+00:00 [queued]>
+[2026-05-01T19:39:11.855+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T19:39:11.923+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): ingest_data> on 2025-01-06 00:00:00+00:00
+[2026-05-01T19:39:11.950+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=958) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T19:39:11.963+0000] {standard_task_runner.py:64} INFO - Started process 966 to run task
+[2026-05-01T19:39:11.974+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'ingest_data', 'scheduled__2025-01-06T00:00:00+00:00', '--job-id', '35', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpmwypapa8']
+[2026-05-01T19:39:11.977+0000] {standard_task_runner.py:91} INFO - Job 35: Subtask ingest_data
+[2026-05-01T19:39:12.180+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.ingest_data scheduled__2025-01-06T00:00:00+00:00 [running]> on host ***-worker
+[2026-05-01T19:39:12.488+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='ingest_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-06T00:00:00+00:00'
+[2026-05-01T19:39:12.496+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T19:39:12.890+0000] {logging_mixin.py:188} INFO - Processing file: /opt/***/project/data/Lower_Manhattan.csv → coffee-shop-updated.coffee_raw.raw_lower_manhattan
+[2026-05-01T19:39:17.673+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T19:39:17.675+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/client.py", line 2584, in load_table_from_file
+    response = self._do_multipart_upload(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/client.py", line 3148, in _do_multipart_upload
+    response = upload.transmit(
+               ^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/resumable_media/requests/upload.py", line 153, in transmit
+    return _request_helpers.wait_and_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/resumable_media/requests/_request_helpers.py", line 155, in wait_and_retry
+    response = func()
+               ^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/resumable_media/requests/upload.py", line 149, in retriable_request
+    self._process_response(result)
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/resumable_media/_upload.py", line 125, in _process_response
+    _helpers.require_status_code(response, (http.client.OK,), self._get_status_code)
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/resumable_media/_helpers.py", line 108, in require_status_code
+    raise common.InvalidResponse(
+google.resumable_media.common.InvalidResponse: ('Request failed with status code', 400, 'Expected one of', 200)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/coffee_pipeline.py", line 100, in process_file
+    job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/client.py", line 2824, in load_table_from_dataframe
+    return self.load_table_from_file(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/google/cloud/bigquery/client.py", line 2588, in load_table_from_file
+    raise exceptions.from_http_response(exc.response)
+google.api_core.exceptions.BadRequest: 400 POST https://bigquery.googleapis.com/upload/bigquery/v2/projects/coffee-shop-updated/jobs?uploadType=multipart: Provided Schema does not match Table coffee-shop-updated:coffee_raw.raw_lower_manhattan. Field transaction_date has changed type from DATE to STRING
+[2026-05-01T19:39:17.706+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=coffee_pipeline, task_id=ingest_data, run_id=scheduled__2025-01-06T00:00:00+00:00, execution_date=20250106T000000, start_date=20260501T193911, end_date=20260501T193917
+[2026-05-01T19:39:17.793+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 35 for task ingest_data (400 POST https://bigquery.googleapis.com/upload/bigquery/v2/projects/coffee-shop-updated/jobs?uploadType=multipart: Provided Schema does not match Table coffee-shop-updated:coffee_raw.raw_lower_manhattan. Field transaction_date has changed type from DATE to STRING; 966)
+[2026-05-01T19:39:17.908+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-05-01T19:39:17.965+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T19:39:17.979+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

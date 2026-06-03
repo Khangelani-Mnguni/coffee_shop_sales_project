@@ -1,0 +1,42 @@
+[2026-05-01T19:43:04.082+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-05-01T19:43:04.179+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: coffee_pipeline.dbt_tests manual__2026-05-01T19:40:05.950029+00:00 [queued]>
+[2026-05-01T19:43:04.204+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: coffee_pipeline.dbt_tests manual__2026-05-01T19:40:05.950029+00:00 [queued]>
+[2026-05-01T19:43:04.211+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-05-01T19:43:04.258+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): dbt_tests> on 2026-05-01 19:40:05.950029+00:00
+[2026-05-01T19:43:04.288+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62: DeprecationWarning: This process (pid=1052) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-05-01T19:43:04.302+0000] {standard_task_runner.py:64} INFO - Started process 1054 to run task
+[2026-05-01T19:43:04.302+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'coffee_pipeline', 'dbt_tests', 'manual__2026-05-01T19:40:05.950029+00:00', '--job-id', '40', '--raw', '--subdir', 'DAGS_FOLDER/coffee_pipeline.py', '--cfg-path', '/tmp/tmpuy53hilb']
+[2026-05-01T19:43:04.316+0000] {standard_task_runner.py:91} INFO - Job 40: Subtask dbt_tests
+[2026-05-01T19:43:04.500+0000] {task_command.py:426} INFO - Running <TaskInstance: coffee_pipeline.dbt_tests manual__2026-05-01T19:40:05.950029+00:00 [running]> on host ***-worker
+[2026-05-01T19:43:04.745+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Khangelani' AIRFLOW_CTX_DAG_ID='coffee_pipeline' AIRFLOW_CTX_TASK_ID='dbt_tests' AIRFLOW_CTX_EXECUTION_DATE='2026-05-01T19:40:05.950029+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-01T19:40:05.950029+00:00'
+[2026-05-01T19:43:04.754+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-05-01T19:43:04.762+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-05-01T19:43:04.765+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', '\n        cd /opt/***/project/transform/coffee_project &&\n        dbt test --target prod\n        ']
+[2026-05-01T19:43:04.815+0000] {subprocess.py:86} INFO - Output:
+[2026-05-01T19:43:11.360+0000] {subprocess.py:93} INFO - [0m19:43:11  Running with dbt=1.8.7
+[2026-05-01T19:43:17.121+0000] {subprocess.py:93} INFO - [0m19:43:17  Registered adapter: bigquery=1.9.2
+[2026-05-01T19:43:18.105+0000] {subprocess.py:93} INFO - [0m19:43:18  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+[2026-05-01T19:43:18.108+0000] {subprocess.py:93} INFO - There are 1 unused configuration paths:
+[2026-05-01T19:43:18.111+0000] {subprocess.py:93} INFO - - models.coffee_project.example
+[2026-05-01T19:43:19.009+0000] {subprocess.py:93} INFO - [0m19:43:19  Found 5 models, 2 data tests, 1 source, 489 macros
+[2026-05-01T19:43:19.040+0000] {subprocess.py:93} INFO - [0m19:43:19
+[2026-05-01T19:43:21.099+0000] {subprocess.py:93} INFO - [0m19:43:21  Concurrency: 4 threads (target='prod')
+[2026-05-01T19:43:21.108+0000] {subprocess.py:93} INFO - [0m19:43:21
+[2026-05-01T19:43:21.154+0000] {subprocess.py:93} INFO - [0m19:43:21  1 of 2 START test not_null_staging_lower_manhattan_transaction_id .............. [RUN]
+[2026-05-01T19:43:21.160+0000] {subprocess.py:93} INFO - [0m19:43:21  2 of 2 START test unique_staging_lower_manhattan_transaction_id ................ [RUN]
+[2026-05-01T19:43:25.702+0000] {subprocess.py:93} INFO - [0m19:43:25  1 of 2 PASS not_null_staging_lower_manhattan_transaction_id .................... [[32mPASS[0m in 4.53s]
+[2026-05-01T19:43:25.741+0000] {subprocess.py:93} INFO - [0m19:43:25  2 of 2 PASS unique_staging_lower_manhattan_transaction_id ...................... [[32mPASS[0m in 4.55s]
+[2026-05-01T19:43:25.979+0000] {subprocess.py:93} INFO - [0m19:43:25
+[2026-05-01T19:43:26.000+0000] {subprocess.py:93} INFO - [0m19:43:25  Finished running 2 data tests in 0 hours 0 minutes and 6.94 seconds (6.94s).
+[2026-05-01T19:43:26.664+0000] {subprocess.py:93} INFO - [0m19:43:26
+[2026-05-01T19:43:26.670+0000] {subprocess.py:93} INFO - [0m19:43:26  [32mCompleted successfully[0m
+[2026-05-01T19:43:26.674+0000] {subprocess.py:93} INFO - [0m19:43:26
+[2026-05-01T19:43:26.680+0000] {subprocess.py:93} INFO - [0m19:43:26  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+[2026-05-01T19:43:29.883+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2026-05-01T19:43:29.887+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-05-01T19:43:29.965+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=coffee_pipeline, task_id=dbt_tests, run_id=manual__2026-05-01T19:40:05.950029+00:00, execution_date=20260501T194005, start_date=20260501T194304, end_date=20260501T194329
+[2026-05-01T19:43:30.022+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-05-01T19:43:30.054+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-05-01T19:43:30.065+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
