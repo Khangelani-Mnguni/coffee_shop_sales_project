@@ -9,16 +9,120 @@ sources:
     tables:
       - name: raw_lower_manhattan
         description: "Raw transactional data from Lower Manhattan store"
+
         columns:
-          - name: transaction_id
-            description: "Unique transaction identifier from source system"
-          - name: transaction_date
-            description: "Transaction date (string format)"
-          - name: transaction_time
-            description: "Transaction time"
-          - name: transaction_qty
-            description: "Number of items purchased"
-          - name: unit_price
-            description: "Price per unit"
-          - name: ingestion_timestamp
-            description: "Timestamp when record was ingested into BigQuery"
+        - name: transaction_id
+          description: "Unique identifier for each sales transaction record."
+
+        - name: transaction_date
+          description: "Date on which the transaction occurred, as provided by the source system."
+
+        - name: transaction_time
+          description: "Time at which the transaction occurred, as provided by the source system."
+
+        - name: transaction_qty
+          description: "Number of units purchased in the transaction line item."
+
+        - name: store_id
+          description: "Unique identifier of the store where the transaction took place."
+
+        - name: store_location
+          description: "Physical location or branch name of the store."
+
+        - name: product_id
+          description: "Unique identifier of the product sold."
+
+        - name: unit_price
+          description: "Selling price per unit of the product at the time of the transaction."
+
+        - name: product_category
+          description: "High-level product grouping, such as Coffee, Tea, or Bakery."
+
+        - name: product_type
+          description: "Product subcategory within the product category."
+
+        - name: product_detail
+          description: "Detailed product name or description."
+
+        - name: ingestion_timestamp
+          description: "Timestamp indicating when the record was ingested into BigQuery."
+
+      - name: raw_astoria
+        description: "Raw transactional data from Astoria store"
+
+        columns:
+        - name: transaction_id
+          description: "Unique identifier for each sales transaction record."
+
+        - name: transaction_date
+          description: "Date on which the transaction occurred, as provided by the source system."
+
+        - name: transaction_time
+          description: "Time at which the transaction occurred, as provided by the source system."
+
+        - name: transaction_qty
+          description: "Number of units purchased in the transaction line item."
+
+        - name: store_id
+          description: "Unique identifier of the store where the transaction took place."
+
+        - name: store_location
+          description: "Physical location or branch name of the store."
+
+        - name: product_id
+          description: "Unique identifier of the product sold."
+
+        - name: unit_price
+          description: "Selling price per unit of the product at the time of the transaction."
+
+        - name: product_category
+          description: "High-level product grouping, such as Coffee, Tea, or Bakery."
+
+        - name: product_type
+          description: "Product subcategory within the product category."
+
+        - name: product_detail
+          description: "Detailed product name or description."
+
+        - name: ingestion_timestamp
+          description: "Timestamp indicating when the record was ingested into BigQuery."
+
+      - name: raw_hells_kitchen
+        description: "Raw transactional data from Hell's Kitchen store"
+        
+        columns:
+        - name: transaction_id
+          description: "Unique identifier for each sales transaction record."
+
+        - name: transaction_date
+          description: "Date on which the transaction occurred, as provided by the source system."
+
+        - name: transaction_time
+          description: "Time at which the transaction occurred, as provided by the source system."
+
+        - name: transaction_qty
+          description: "Number of units purchased in the transaction line item."
+
+        - name: store_id
+          description: "Unique identifier of the store where the transaction took place."
+
+        - name: store_location
+          description: "Physical location or branch name of the store."
+
+        - name: product_id
+          description: "Unique identifier of the product sold."
+
+        - name: unit_price
+          description: "Selling price per unit of the product at the time of the transaction."
+
+        - name: product_category
+          description: "High-level product grouping, such as Coffee, Tea, or Bakery."
+
+        - name: product_type
+          description: "Product subcategory within the product category."
+
+        - name: product_detail
+          description: "Detailed product name or description."
+
+        - name: ingestion_timestamp
+          description: "Timestamp indicating when the record was ingested into BigQuery."
