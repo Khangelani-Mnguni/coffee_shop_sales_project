@@ -9,13 +9,13 @@ from datetime import datetime, timedelta
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # ----------------------------
-# 1️⃣ Database configs
+# Database configs
 # ----------------------------
 # Use Docker network hostnames
 MYSQL_HOST = "host.docker.internal"
 MYSQL_PORT = 3306
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "Whatsnew2711"
+MYSQL_PASSWORD = "your_mysql_password"  # Replace with your actual password
 MYSQL_DB = 'coffee_shop_sales'
 
 import os
@@ -23,11 +23,11 @@ import os
 PG_HOST = os.environ.get("POSTGRES_HOST", "postgres")  # Docker service name
 PG_PORT = int(os.environ.get("POSTGRES_PORT", 5432))
 PG_USER = os.environ.get("POSTGRES_USER", "postgres")  # Your PG admin user
-PG_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "Whatsnew2711")  # Your password
+PG_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "your_postgres_password")  # Your password
 PG_DB = os.environ.get("POSTGRES_DB", "coffee_sales_data")  # Your actual DB
 
 # ----------------------------
-# 2️⃣ Helpers
+# Helpers
 # ----------------------------
 def get_postgres_connection():
     try:
@@ -35,11 +35,11 @@ def get_postgres_connection():
             host=PG_HOST, port=PG_PORT, user=PG_USER, password=PG_PASSWORD, dbname=PG_DB
         )
     except Exception as e:
-        logging.error(f"❌ Failed to connect to PostgreSQL: {e}")
+        logging.error(f"Failed to connect to PostgreSQL: {e}")
         return None
 
 def get_latest_date_from_postgres():
-    logging.info("🔍 Checking latest date in PostgreSQL...")
+    logging.info("Checking latest date in PostgreSQL...")
     conn = get_postgres_connection()
     if not conn:
         return None
@@ -55,16 +55,16 @@ def get_latest_date_from_postgres():
         cur.close()
         return latest_date
     except Exception as e:
-        logging.error(f"❌ Failed to retrieve latest date: {e}")
+        logging.error(f"Failed to retrieve latest date: {e}")
         return None
     finally:
         conn.close()
 
 # ----------------------------
-# 3️⃣ ETL Functions
+# ETL Functions
 # ----------------------------
 def extract_data_from_mysql(date_to_process):
-    logging.info(f"📥 Extracting data from MySQL for {date_to_process}...")
+    logging.info(f"Extracting data from MySQL for {date_to_process}...")
     try:
         conn = mysql.connector.connect(
             host=MYSQL_HOST, port=MYSQL_PORT, user=MYSQL_USER,
@@ -89,7 +89,7 @@ def extract_data_from_mysql(date_to_process):
         df = pd.read_sql(query, conn)
         return df
     except Exception as e:
-        logging.error(f"❌ MySQL extraction failed: {e}")
+        logging.error(f"MySQL extraction failed: {e}")
         return None
     finally:
         if 'conn' in locals() and conn.is_connected():
@@ -97,7 +97,7 @@ def extract_data_from_mysql(date_to_process):
             logging.info("MySQL connection closed.")
 
 def transform_data(df_raw):
-    logging.info("🔄 Transforming data for OLAP...")
+    logging.info("Transforming data for OLAP...")
     # Convert dates & times
     df_raw["transaction_date"] = pd.to_datetime(df_raw["transaction_date"], errors="coerce")
     df_raw["transaction_time"] = pd.to_datetime(df_raw["transaction_time"].astype(str), errors="coerce").dt.time
@@ -124,7 +124,7 @@ def transform_data(df_raw):
     return dim_date, dim_time, dim_store, dim_product, df_fact
 
 def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
-    logging.info("📤 Loading data to PostgreSQL...")
+    logging.info("Loading data to PostgreSQL...")
     conn = get_postgres_connection()
     if not conn:
         return
@@ -134,9 +134,9 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
         # You can reuse your previous "check then insert" loops here
         conn.commit()
         cur.close()
-        logging.info("✅ Data loaded successfully!")
+        logging.info("Data loaded successfully!")
     except Exception as e:
-        logging.error(f"❌ Load to PostgreSQL failed: {e}")
+        logging.error(f"Load to PostgreSQL failed: {e}")
         conn.rollback()
     finally:
         conn.close()
@@ -147,14 +147,14 @@ def run_daily_etl():
         date_to_process = (latest_date + timedelta(days=1)).strftime('%Y-%m-%d')
     else:
         date_to_process = '2025-01-01'
-    logging.info(f"📆 Processing date: {date_to_process}")
+    logging.info(f"Processing date: {date_to_process}")
     df_raw = extract_data_from_mysql(date_to_process)
     if df_raw is not None and not df_raw.empty:
         dim_date, dim_time, dim_store, dim_product, df_fact = transform_data(df_raw)
         load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact)
-        logging.info(f"✅ Completed ETL for {date_to_process}")
+        logging.info(f"Completed ETL for {date_to_process}")
     else:
-        logging.warning(f"⚠️ No data for {date_to_process}. Skipping.")
+        logging.warning(f"No data for {date_to_process}. Skipping.")
 
 # ----------------------------
 # 4️⃣ DAG Definition

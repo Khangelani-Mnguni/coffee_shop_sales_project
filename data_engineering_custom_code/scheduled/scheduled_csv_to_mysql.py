@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # =========================================================
-# 1️⃣ Database Connection Configurations
+# Database Connection Configurations
 # =========================================================
 # Configuration for the MySQL OLTP database.
 MYSQL_HOST = "localhost"
@@ -29,23 +29,23 @@ def get_mysql_connection():
         )
         return conn
     except mysql.connector.Error as err:
-        logging.error(f"❌ Failed to connect to MySQL: {err}")
+        logging.error(f"Failed to connect to MySQL: {err}")
         return None
 
 # =========================================================
-# 2️⃣ ETL Functions
+# ETL Functions
 # =========================================================
 
 def extract_data(input_csv):
     """
     Extracts data from a specified CSV file into a pandas DataFrame.
     """
-    logging.info(f"📥 Extracting data from '{input_csv}'...")
+    logging.info(f"Extracting data from '{input_csv}'...")
     try:
         df = pd.read_csv(input_csv, sep=";")
         return df
     except FileNotFoundError:
-        logging.error(f"❌ Error: The file '{input_csv}' was not found.")
+        logging.error(f"Error: The file '{input_csv}' was not found.")
         return None
 
 def transform_data(df, start_offset_date, end_offset_date):
@@ -57,7 +57,7 @@ def transform_data(df, start_offset_date, end_offset_date):
     - Converting currency
     - Regenerating unique transaction IDs
     """
-    logging.info("🔄 Transforming data...")
+    logging.info("Transforming data...")
 
     # Convert date and time
     df['transaction_date'] = pd.to_datetime(df['transaction_date'], errors='coerce')
@@ -120,7 +120,7 @@ def load_data_to_mysql(df, table_name):
         logging.warning("⚠ No data to load to MySQL.")
         return
 
-    logging.info("🚀 Loading data to MySQL...")
+    logging.info("Loading data to MySQL...")
     conn = None
     cursor = None
     try:
@@ -156,10 +156,10 @@ def load_data_to_mysql(df, table_name):
 
         cursor.executemany(insert_query, records)
         conn.commit()
-        logging.info(f"✅ Load complete! Inserted/updated {cursor.rowcount} records.")
+        logging.info(f"Load complete! Inserted/updated {cursor.rowcount} records.")
 
     except mysql.connector.Error as err:
-        logging.error(f"❌ MySQL Error: {err}")
+        logging.error(f"MySQL Error: {err}")
         if conn and conn.is_connected():
             conn.rollback()
     finally:
@@ -174,7 +174,7 @@ def get_latest_date_from_mysql():
     Queries MySQL to find the most recent transaction date in the
     sales_data table.
     """
-    logging.info("🔍 Checking for the latest date in MySQL...")
+    logging.info("Checking for the latest date in MySQL...")
     conn = None
     cursor = None
     try:
@@ -190,13 +190,13 @@ def get_latest_date_from_mysql():
         latest_date = cursor.fetchone()[0]
         
         if latest_date:
-            logging.info(f"✅ Latest date found in database: {latest_date}")
+            logging.info(f"Latest date found in database: {latest_date}")
             return latest_date
         else:
-            logging.warning("⚠️ No data found in sales_data table. Starting from default date.")
+            logging.warning("No data found in sales_data table. Starting from default date.")
             return None
     except mysql.connector.Error as err:
-        logging.error(f"❌ Failed to retrieve latest date from MySQL: {err}")
+        logging.error(f"Failed to retrieve latest date from MySQL: {err}")
         return None
     finally:
         if cursor:
@@ -222,7 +222,7 @@ if __name__ == "__main__":
         # Default start date for the backfilling.
         date_to_process = '2025-01-01'
 
-    logging.info(f"📆 Processing date: {date_to_process}")
+    logging.info(f"Processing date: {date_to_process}")
 
     df_raw = extract_data(input_file)
     if df_raw is not None:

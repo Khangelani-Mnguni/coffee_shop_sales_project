@@ -9,20 +9,20 @@ from datetime import datetime, timedelta
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # =========================================================
-# 1️⃣ Database Connection Configurations
+# Database Connection Configurations
 # =========================================================
 # Configuration for the MySQL OLTP database.
 MYSQL_HOST = "localhost"
 MYSQL_PORT = 3306
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "Whatsnew2711"
+MYSQL_PASSWORD = "your_mysql_password"  # Replace with your actual password
 MYSQL_DB = 'coffee_shop_sales'
 
 # Configuration for the PostgreSQL OLAP database.
 PG_HOST = "localhost"
 PG_PORT = 5432
 PG_USER = "postgres"
-PG_PASSWORD = "Whatsnew2711"
+PG_PASSWORD = "your_postgres_password"  # Replace with your actual password
 PG_DB = "coffee_sales_data"
 
 def get_postgres_connection():
@@ -37,7 +37,7 @@ def get_postgres_connection():
         )
         return conn
     except psycopg2.Error as e:
-        logging.error(f"❌ Failed to connect to PostgreSQL: {e}")
+        logging.error(f"Failed to connect to PostgreSQL: {e}")
         return None
 
 # =========================================================
@@ -49,7 +49,7 @@ def extract_data_from_mysql(start_date_to_process, end_date_to_process):
     Extracts transaction data from MySQL OLTP database
     for a specific date range.
     """
-    logging.info(f"📥 Extracting data from MySQL for date range {start_date_to_process} to {end_date_to_process}...")
+    logging.info(f"Extracting data from MySQL for date range {start_date_to_process} to {end_date_to_process}...")
     conn = None
     try:
         conn = mysql.connector.connect(
@@ -76,10 +76,10 @@ def extract_data_from_mysql(start_date_to_process, end_date_to_process):
         WHERE transaction_date BETWEEN '{start_date_to_process}' AND '{end_date_to_process}';
         """
         df_raw = pd.read_sql(query, conn)
-        logging.info(f"✅ Extracted {len(df_raw)} records.")
+        logging.info(f"Extracted {len(df_raw)} records.")
         return df_raw
     except mysql.connector.Error as err:
-        logging.error(f"❌ MySQL Error: {err}")
+        logging.error(f"MySQL Error: {err}")
         return None
     finally:
         if conn and conn.is_connected():
@@ -91,7 +91,7 @@ def transform_data(df_raw):
     Transforms raw MySQL data into star schema DataFrames that match PostgreSQL tables.
     Returns: dim_date, dim_time, dim_store, dim_product, df_fact
     """
-    logging.info("🔄 Transforming data for OLAP...")
+    logging.info("Transforming data for OLAP...")
 
     # Convert transaction_date and time to datetime
     df_raw["transaction_date"] = pd.to_datetime(df_raw["transaction_date"], errors="coerce")
@@ -146,7 +146,7 @@ def transform_data(df_raw):
         "total_amount"
     ]]
 
-    logging.info(f"✅ Transformation completed. Records: {len(df_fact)}")
+    logging.info(f"Transformation completed. Records: {len(df_fact)}")
     return dim_date, dim_time, dim_store, dim_product, df_fact
 
 def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
@@ -154,7 +154,7 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
     Loads transformed data into PostgreSQL OLAP database
     using batch insertion for better performance.
     """
-    logging.info("📤 Loading data to PostgreSQL using batch insertion...")
+    logging.info("Loading data to PostgreSQL using batch insertion...")
     conn = None
     try:
         conn = get_postgres_connection()
@@ -295,7 +295,7 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
         df_fact_to_insert = df_fact[~df_fact['transaction_id'].isin(existing_transactions)].copy()
 
         if df_fact_to_insert.empty:
-            logging.info("⚠️ No new transactions to insert. Skipping batch insertion.")
+            logging.info("No new transactions to insert. Skipping batch insertion.")
             conn.commit()
             cur.close()
             return
@@ -333,10 +333,10 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
 
         conn.commit()
         cur.close()
-        logging.info("✅ Data loaded to PostgreSQL successfully!")
+        logging.info("Data loaded to PostgreSQL successfully!")
 
     except Exception as e:
-        logging.error(f"❌ Failed to load data to PostgreSQL: {e}")
+        logging.error(f"Failed to load data to PostgreSQL: {e}")
         if conn:
             conn.rollback()
     finally:
@@ -344,7 +344,7 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
             conn.close()
 
 # =========================================================
-# 3️⃣ Main Execution Logic for Backdating
+# Main Execution Logic for Backdating
 # =========================================================
 
 def run_backdate(start_date_str, end_date_str):
@@ -355,10 +355,10 @@ def run_backdate(start_date_str, end_date_str):
         start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
         end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
     except ValueError:
-        logging.error("❌ Invalid date format. Please use YYYY-MM-DD.")
+        logging.error("Invalid date format. Please use YYYY-MM-DD.")
         return
 
-    logging.info(f"⏳ Starting backdating process from {start_date} to {end_date}...")
+    logging.info(f"Starting backdating process from {start_date} to {end_date}...")
 
     # --- Extract all data for the date range at once ---
     df_raw = extract_data_from_mysql(start_date, end_date)
@@ -369,13 +369,13 @@ def run_backdate(start_date_str, end_date_str):
             dim_date, dim_time, dim_store, dim_product, df_fact = transform_data(df_raw)
             # --- Load all data in batches ---
             load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact)
-            logging.info(f"✅ Completed ETL for date range: {start_date} to {end_date}")
+            logging.info(f"Completed ETL for date range: {start_date} to {end_date}")
         except Exception as e:
-            logging.error(f"❌ ETL process failed for date range: {start_date} to {end_date}: {e}")
+            logging.error(f"ETL process failed for date range: {start_date} to {end_date}: {e}")
     else:
-        logging.warning(f"⚠️ No data found for the date range {start_date} to {end_date} or extraction failed. Skipping.")
+        logging.warning(f"No data found for the date range {start_date} to {end_date} or extraction failed. Skipping.")
     
-    logging.info("🎉 Backdating process finished.")
+    logging.info("Backdating process finished.")
 
 if __name__ == "__main__":
     start_input = input("Enter start date (YYYY-MM-DD): ").strip()

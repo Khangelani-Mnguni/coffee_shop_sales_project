@@ -1,7 +1,6 @@
 import pandas as pd
 import mysql.connector
 import psycopg2
-from psycopg2 import extras
 import logging
 from datetime import datetime, timedelta
 
@@ -9,20 +8,20 @@ from datetime import datetime, timedelta
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # =========================================================
-# 1️⃣ Database Connection Configurations
+#  Database Connection Configurations
 # =========================================================
 # Configuration for the MySQL OLTP database.
 MYSQL_HOST = "localhost"
 MYSQL_PORT = 3306
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "Whatsnew2711"
+MYSQL_PASSWORD = "your_mysql_password"  # Replace with your actual password
 MYSQL_DB = 'coffee_shop_sales'
 
 # Configuration for the PostgreSQL OLAP database.
 PG_HOST = "localhost"
 PG_PORT = 5432
 PG_USER = "postgres"
-PG_PASSWORD = "Whatsnew2711"
+PG_PASSWORD = "your_postgres_password"  # Replace with your actual password
 PG_DB = "coffee_sales_data"
 
 def get_postgres_connection():
@@ -37,11 +36,11 @@ def get_postgres_connection():
         )
         return conn
     except psycopg2.Error as e:
-        logging.error(f"❌ Failed to connect to PostgreSQL: {e}")
+        logging.error(f"Failed to connect to PostgreSQL: {e}")
         return None
 
 # =========================================================
-# 2️⃣ ETL Functions
+# ETL Functions
 # =========================================================
 
 def extract_data_from_mysql(date_to_process):
@@ -49,8 +48,9 @@ def extract_data_from_mysql(date_to_process):
     Extracts daily transaction data from MySQL OLTP database
     for a specific date.
     """
-    logging.info(f"📥 Extracting data from MySQL for {date_to_process}...")
+    logging.info(f"Extracting data from MySQL for {date_to_process}...")
     conn = None
+    cursor = None
     try:
         conn = mysql.connector.connect(
             host=MYSQL_HOST,
@@ -59,6 +59,7 @@ def extract_data_from_mysql(date_to_process):
             password=MYSQL_PASSWORD,
             database=MYSQL_DB
         )
+        cursor = conn.cursor()
         query = f"""
         SELECT
             transaction_id,
@@ -76,13 +77,17 @@ def extract_data_from_mysql(date_to_process):
         WHERE transaction_date = '{date_to_process}';
         """
         df_raw = pd.read_sql(query, conn)
-        logging.info(f"✅ Extracted {len(df_raw)} records.")
+        logging.info(f"Extracted {len(df_raw)} records.")
         return df_raw
     except mysql.connector.Error as err:
-        logging.error(f"❌ MySQL Error: {err}")
+        logging.error(f"MySQL Error: {err}")
+        if 'conn' in locals() and conn.is_connected():
+            conn.rollback()
         return None
     finally:
-        if conn and conn.is_connected():
+        if 'cursor' in locals() and cursor is not None:
+            cursor.close()
+        if 'conn' in locals() and conn.is_connected():
             conn.close()
             logging.info("MySQL connection closed.")
 
@@ -91,45 +96,65 @@ def transform_data(df_raw):
     Transforms raw MySQL data into star schema DataFrames that match PostgreSQL tables.
     Returns: dim_date, dim_time, dim_store, dim_product, df_fact
     """
-    logging.info("🔄 Transforming data for OLAP...")
+    logging.info("Transforming data for OLAP...")
 
-    # Convert transaction_date and time to datetime
-    df_raw["transaction_date"] = pd.to_datetime(df_raw["transaction_date"], errors="coerce")
-    if pd.api.types.is_timedelta64_dtype(df_raw["transaction_time"]):
-        df_raw["transaction_time"] = df_raw["transaction_time"].apply(
-            lambda x: (pd.Timestamp("00:00:00") + x).time() if pd.notnull(x) else None
-        )
-    else:
-        df_raw["transaction_time"] = pd.to_datetime(
-            df_raw["transaction_time"].astype(str), errors="coerce"
-        ).dt.time
+    # ----------------------------
+    # Convert transaction_date to datetime
+    # ----------------------------
+    if "transaction_date" in df_raw.columns:
+        df_raw["transaction_date"] = pd.to_datetime(df_raw["transaction_date"], errors="coerce")
+
+    # ----------------------------
+    # Convert transaction_time from timedelta to time
+    # ----------------------------
+    if "transaction_time" in df_raw.columns:
+        if pd.api.types.is_timedelta64_dtype(df_raw["transaction_time"]):
+            df_raw["transaction_time"] = df_raw["transaction_time"].apply(
+                lambda x: (pd.Timestamp("00:00:00") + x).time() if pd.notnull(x) else None
+            )
+        else:
+            df_raw["transaction_time"] = pd.to_datetime(
+                df_raw["transaction_time"].astype(str), errors="coerce"
+            ).dt.time
 
     # Drop rows where conversion failed
     df_raw = df_raw.dropna(subset=["transaction_date", "transaction_time"])
 
+    # ----------------------------
     # Calculate total_amount
+    # ----------------------------
     df_raw["total_amount"] = df_raw["transaction_qty"] * df_raw["unit_price"]
 
+    # ----------------------------
     # Dim Date
+    # ----------------------------
     dim_date = df_raw[["transaction_date"]].drop_duplicates().reset_index(drop=True)
     dim_date["day"] = dim_date["transaction_date"].dt.day
     dim_date["month"] = dim_date["transaction_date"].dt.month
     dim_date["year"] = dim_date["transaction_date"].dt.year
     dim_date["weekday"] = dim_date["transaction_date"].dt.day_name()
 
+    # ----------------------------
     # Dim Time
+    # ----------------------------
     dim_time = df_raw[["transaction_time"]].drop_duplicates().reset_index(drop=True)
     dim_time["hour"] = dim_time["transaction_time"].apply(lambda x: x.hour)
     dim_time["minute"] = dim_time["transaction_time"].apply(lambda x: x.minute)
     dim_time["second"] = dim_time["transaction_time"].apply(lambda x: x.second)
 
+    # ----------------------------
     # Dim Store
+    # ----------------------------
     dim_store = df_raw[["store_id", "store_location"]].drop_duplicates().reset_index(drop=True)
 
+    # ----------------------------
     # Dim Product
+    # ----------------------------
     dim_product = df_raw[["product_id", "product_category", "product_type", "product_detail", "unit_price"]].drop_duplicates().reset_index(drop=True)
 
+    # ----------------------------
     # Fact Table
+    # ----------------------------
     df_fact = df_raw.copy()
     df_fact = df_fact.merge(dim_date, on="transaction_date")
     df_fact = df_fact.merge(dim_time, on="transaction_time")
@@ -138,15 +163,15 @@ def transform_data(df_raw):
 
     df_fact = df_fact[[
         "transaction_id",
-        "transaction_date",
-        "transaction_time",
-        "store_id",
-        "product_id",
+        "transaction_date",  # maps to dim_date.date_id in load
+        "transaction_time",  # maps to dim_time.time_id
+        "store_id",          # maps to dim_store.store_id
+        "product_id",        # maps to dim_product.product_id
         "transaction_qty",
         "total_amount"
     ]]
 
-    logging.info(f"✅ Transformation completed. Records: {len(df_fact)}")
+    logging.info(f"Transformation completed. Records: {len(df_fact)}")
     return dim_date, dim_time, dim_store, dim_product, df_fact
 
 def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
@@ -154,32 +179,32 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
     Loads transformed data into PostgreSQL OLAP database
     by checking for existence before inserting to avoid duplicates.
     """
-    logging.info("📤 Loading data to PostgreSQL...")
+    logging.info("Loading data to PostgreSQL...")
     conn = None
     try:
         conn = get_postgres_connection()
         if not conn:
             return
-
+        
         cur = conn.cursor()
 
         # -----------------------------
-        # Dim Date (Optimized Check then Insert)
+        # Dim Date (Check then Insert)
         # -----------------------------
-        cur.execute("SELECT transaction_date, date_id FROM dim_date;")
-        existing_dates = {row[0]: row[1] for row in cur.fetchall()}
         date_id_map = {}
         for _, row in dim_date.iterrows():
-            date_to_check = row["transaction_date"].date()
-            if date_to_check in existing_dates:
-                date_id_map[row["transaction_date"]] = existing_dates[date_to_check]
+            cur.execute("SELECT date_id FROM dim_date WHERE transaction_date = %s;", (row["transaction_date"].date(),))
+            result = cur.fetchone()
+
+            if result:
+                date_id_map[row["transaction_date"]] = result[0]
             else:
                 cur.execute("""
                     INSERT INTO dim_date (transaction_date, day, month, year, weekday)
                     VALUES (%s, %s, %s, %s, %s)
                     RETURNING date_id;
                 """, (
-                    date_to_check,
+                    row["transaction_date"].date(),
                     int(row["day"]),
                     int(row["month"]),
                     int(row["year"]),
@@ -188,14 +213,15 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
                 date_id_map[row["transaction_date"]] = cur.fetchone()[0]
 
         # -----------------------------
-        # Dim Time (Optimized Check then Insert)
+        # Dim Time (Check then Insert)
         # -----------------------------
-        cur.execute("SELECT transaction_time, time_id FROM dim_time;")
-        existing_times = {row[0]: row[1] for row in cur.fetchall()}
         time_id_map = {}
         for _, row in dim_time.iterrows():
-            if row["transaction_time"] in existing_times:
-                time_id_map[row["transaction_time"]] = existing_times[row["transaction_time"]]
+            cur.execute("SELECT time_id FROM dim_time WHERE transaction_time = %s;", (row["transaction_time"],))
+            result = cur.fetchone()
+
+            if result:
+                time_id_map[row["transaction_time"]] = result[0]
             else:
                 cur.execute("""
                     INSERT INTO dim_time (transaction_time, hour, minute, second)
@@ -210,14 +236,15 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
                 time_id_map[row["transaction_time"]] = cur.fetchone()[0]
 
         # -----------------------------
-        # Dim Store (Optimized Check then Insert)
+        # Dim Store (Check then Insert)
         # -----------------------------
-        cur.execute("SELECT store_location, store_id FROM dim_store;")
-        existing_stores = {row[0]: row[1] for row in cur.fetchall()}
         store_id_map = {}
         for _, row in dim_store.iterrows():
-            if row["store_location"] in existing_stores:
-                store_id_map[row["store_id"]] = existing_stores[row["store_location"]]
+            cur.execute("SELECT store_id FROM dim_store WHERE store_location = %s;", (row["store_location"],))
+            result = cur.fetchone()
+
+            if result:
+                store_id_map[row["store_id"]] = result[0]
             else:
                 cur.execute("""
                     INSERT INTO dim_store (store_location)
@@ -227,18 +254,18 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
                 store_id_map[row["store_id"]] = cur.fetchone()[0]
 
         # -----------------------------
-        # Dim Product (Optimized Check then Insert)
+        # Dim Product (Check then Insert)
         # -----------------------------
-        cur.execute("""
-            SELECT product_category, product_type, product_detail, product_id
-            FROM dim_product;
-        """)
-        existing_products = {(row[0], row[1], row[2]): row[3] for row in cur.fetchall()}
         product_id_map = {}
         for _, row in dim_product.iterrows():
-            product_tuple = (row["product_category"], row["product_type"], row["product_detail"])
-            if product_tuple in existing_products:
-                product_id_map[row["product_id"]] = existing_products[product_tuple]
+            cur.execute("""
+                SELECT product_id FROM dim_product
+                WHERE product_category = %s AND product_type = %s AND product_detail = %s;
+            """, (row["product_category"], row["product_type"], row["product_detail"]))
+            result = cur.fetchone()
+
+            if result:
+                product_id_map[row["product_id"]] = result[0]
             else:
                 cur.execute("""
                     INSERT INTO dim_product (product_category, product_type, product_detail, unit_price)
@@ -251,17 +278,17 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
                     float(row["unit_price"])
                 ))
                 product_id_map[row["product_id"]] = cur.fetchone()[0]
-
+        
         conn.commit()
 
         # -----------------------------
-        # Fact Table (Optimized Check then Insert)
+        # Fact Table (Check then Insert)
         # -----------------------------
-        cur.execute("SELECT transaction_id FROM fact_sales;")
-        existing_transactions = {row[0] for row in cur.fetchall()}
-        
         for _, row in df_fact.iterrows():
-            if row["transaction_id"] not in existing_transactions:
+            cur.execute("SELECT transaction_id FROM fact_sales WHERE transaction_id = %s;", (row["transaction_id"],))
+            result = cur.fetchone()
+            
+            if not result:
                 cur.execute("""
                     INSERT INTO fact_sales (transaction_id, date_id, time_id, store_id, product_id, transaction_qty, total_amount)
                     VALUES (%s, %s, %s, %s, %s, %s, %s);
@@ -277,10 +304,10 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
         
         conn.commit()
         cur.close()
-        logging.info("✅ Data loaded to PostgreSQL successfully!")
+        logging.info("Data loaded to PostgreSQL successfully!")
 
     except Exception as e:
-        logging.error(f"❌ Failed to load data to PostgreSQL: {e}")
+        logging.error(f"Failed to load data to PostgreSQL: {e}")
         if conn:
             conn.rollback()
     finally:
@@ -288,50 +315,79 @@ def load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact):
             conn.close()
 
 # =========================================================
-# 3️⃣ Main Execution Logic for Backdating
+# Main Execution Logic for Backdating
 # =========================================================
 
-def run_backdate(start_date_str, end_date_str):
+def get_latest_date_from_postgres():
     """
-    Runs the full ETL pipeline for a specified date range.
+    Queries PostgreSQL to find the most recent transaction date in the
+    fact_sales table.
     """
+    logging.info("Checking for the latest date in PostgreSQL...")
+    conn = None
     try:
-        # Convert string dates to datetime.date objects for easier iteration
-        start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
-        end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
-    except ValueError:
-        logging.error("❌ Invalid date format. Please use YYYY-MM-DD.")
-        return
-
-    logging.info(f"⏳ Starting backdating process from {start_date} to {end_date}...")
-
-    current_date = start_date
-    while current_date <= end_date:
-        date_to_process = current_date.strftime('%Y-%m-%d')
-        logging.info(f"📆 Processing date: {date_to_process}")
-
-        # --- Extract ---
-        df_raw = extract_data_from_mysql(date_to_process)
+        conn = get_postgres_connection()
+        if not conn:
+            return None
         
-        # Check if extraction was successful and data exists
-        if df_raw is not None and not df_raw.empty:
-            # --- Transform ---
-            try:
-                dim_date, dim_time, dim_store, dim_product, df_fact = transform_data(df_raw)
-                # --- Load ---
-                load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact)
-                logging.info(f"✅ Completed ETL for: {date_to_process}")
-            except Exception as e:
-                logging.error(f"❌ ETL process failed for {date_to_process}: {e}")
+        cur = conn.cursor()
+        # Join fact_sales with dim_date to get the actual date
+        cur.execute("""
+            SELECT MAX(T2.transaction_date)
+            FROM fact_sales AS T1
+            JOIN dim_date AS T2
+            ON T1.date_id = T2.date_id;
+        """)
+        latest_date = cur.fetchone()[0]
+        cur.close()
+
+        if latest_date:
+            logging.info(f"Latest date found in database: {latest_date}")
+            return latest_date
         else:
-            logging.warning(f"⚠️ No data found for {date_to_process} or extraction failed. Skipping.")
-        
-        # Increment to the next day
-        current_date += timedelta(days=1)
+            logging.warning("No data found in fact_sales table. Starting from default date.")
+            return None
+    except Exception as e:
+        logging.error(f"Failed to retrieve latest date from PostgreSQL: {e}")
+        return None
+    finally:
+        if conn:
+            conn.close()
+
+def run_daily_etl():
+    """
+    Runs the ETL pipeline for a single day, determined by the latest
+    data in the PostgreSQL database.
+    """
+    # Find the latest date in the OLAP database
+    latest_date_in_db = get_latest_date_from_postgres()
     
-    logging.info("🎉 Backdating process finished.")
+    # Determine the date to process. If no data exists, start from the beginning.
+    if latest_date_in_db:
+        # Load the next day's data
+        date_to_process = (latest_date_in_db + timedelta(days=1)).strftime('%Y-%m-%d')
+    else:
+        # Default start date for the backfilling.
+        date_to_process = '2025-01-01'
+
+    logging.info(f"Processing date: {date_to_process}")
+
+    # --- Extract ---
+    df_raw = extract_data_from_mysql(date_to_process)
+    
+    # Check if extraction was successful and data exists
+    if df_raw is not None and not df_raw.empty:
+        # --- Transform ---
+        try:
+            dim_date, dim_time, dim_store, dim_product, df_fact = transform_data(df_raw)
+            # --- Load ---
+            load_data_to_postgres(dim_date, dim_time, dim_store, dim_product, df_fact)
+            logging.info(f"Completed ETL for: {date_to_process}")
+        except Exception as e:
+            logging.error(f"ETL process failed for {date_to_process}: {e}")
+    else:
+        logging.warning(f"No data found for {date_to_process} or extraction failed. Skipping.")
 
 if __name__ == "__main__":
-    start_input = input("Enter start date (YYYY-MM-DD): ").strip()
-    end_input = input("Enter end date (YYYY-MM-DD): ").strip()
-    run_backdate(start_input, end_input)
+    run_daily_etl()
+

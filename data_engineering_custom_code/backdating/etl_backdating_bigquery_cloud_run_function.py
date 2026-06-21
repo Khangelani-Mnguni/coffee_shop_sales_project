@@ -11,12 +11,11 @@ from google.cloud import storage
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # BigQuery project and dataset configuration
-# The project ID is now hardcoded to prevent errors from missing environment variables.
 PROJECT_ID = "glassy-augury-463218-e4"
 DATASET_ID = "coffee_sales_data"
 
 # =========================================================
-# 1️⃣ BigQuery Table Schemas
+# BigQuery Table Schemas
 # =========================================================
 # Define the schemas for the BigQuery tables.
 
@@ -82,7 +81,7 @@ def create_table_if_not_exists(client, table_id, schema):
         logging.info(f"Table {table_id} created successfully.")
 
 # =========================================================
-# 2️⃣ ETL Functions
+# ETL Functions
 # =========================================================
 
 def transform_data(df_raw):
@@ -90,7 +89,7 @@ def transform_data(df_raw):
     Transforms raw CSV data into a star schema and returns DataFrames
     for each dimension and fact table.
     """
-    logging.info("🔄 Transforming data for BigQuery...")
+    logging.info("Transforming data for BigQuery...")
 
     # Calculate total_amount
     df_raw["total_amount"] = df_raw["transaction_qty"] * df_raw["unit_price"]
@@ -140,14 +139,14 @@ def transform_data(df_raw):
         "total_amount"
     ]]
 
-    logging.info(f"✅ Transformation completed. Records: {len(df_fact)}")
+    logging.info(f"Transformation completed. Records: {len(df_fact)}")
     return dim_date, dim_time, dim_store, dim_product, df_fact
 
 def load_data_to_bigquery(client, dim_date, dim_time, dim_store, dim_product, df_fact):
     """
     Loads DataFrames into their respective BigQuery tables, overwriting existing data.
     """
-    logging.info("📤 Loading data to BigQuery...")
+    logging.info("Loading data to BigQuery...")
 
     # Load dimension tables first
     dim_tables = {
@@ -180,7 +179,7 @@ def load_data_to_bigquery(client, dim_date, dim_time, dim_store, dim_product, df
     job.result()
     logging.info(f"Loaded {job.output_rows} rows into {fact_table_id}.")
 
-    logging.info("✅ Data loaded to BigQuery successfully!")
+    logging.info("Data loaded to BigQuery successfully!")
 
 
 @functions_framework.cloud_event
@@ -194,7 +193,7 @@ def process_gcs_file(cloud_event):
         bucket_name = data["bucket"]
         file_name = data["name"]
 
-        logging.info(f"📥 Processing new file: gs://{bucket_name}/{file_name}")
+        logging.info(f"Processing new file: gs://{bucket_name}/{file_name}")
 
         # Check if the file is the one we want to process
         if file_name != "transformed.csv":
@@ -211,7 +210,7 @@ def process_gcs_file(cloud_event):
         
         # Read the CSV directly into a pandas DataFrame
         df_raw = pd.read_csv(blob.open("rb"))
-        logging.info(f"✅ Successfully read {len(df_raw)} records from {file_name}.")
+        logging.info(f"Successfully read {len(df_raw)} records from {file_name}.")
 
         # --- Transform ---
         dim_date, dim_time, dim_store, dim_product, df_fact = transform_data(df_raw)
@@ -233,8 +232,8 @@ def process_gcs_file(cloud_event):
         # Load the data into BigQuery
         load_data_to_bigquery(bigquery_client, dim_date, dim_time, dim_store, dim_product, df_fact)
         
-        logging.info("✅ ETL process completed successfully.")
+        logging.info("ETL process completed successfully.")
 
     except Exception as e:
-        logging.error(f"❌ An error occurred during the ETL process: {e}")
+        logging.error(f"An error occurred during the ETL process: {e}")
         # You could also add more robust error handling, like sending a notification.
