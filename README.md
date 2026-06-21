@@ -51,6 +51,8 @@ Tech Stack
 
 Databases: MySQL, PostgreSQL, BigQuery
 
+Transformation tools: dbt
+
 Languages/Libraries: Python (pandas, numpy, scikit-learn, xgboost), Matplotlib, Seaborn
 
 Cloud: Google Cloud Platform (GCS, Cloud Run, BigQuery)
@@ -59,14 +61,12 @@ Orchestration: Apache Airflow (Dockerized)
 
 BI Tools: Power BI, Looker Studio
 
-AI Tools: ChatGPT, Gemini (LLM-assisted development)
-
 Repository Structure
 coffee_shop_sales_project/
-├── data_engineering/   # ETL scripts, backfilling, scheduled jobs
-├── data_science/       # Notebooks, ML models, feature importance
-├── README.md           # Project documentation (this file)
-└── requirements.txt    # Python dependencies
+- data_engineering_custom_code/   # ETL scripts, backfilling, scheduled jobs
+- data_engineering_dbt/   # raw_tables, terraform, dbt models, scheduled jobs
+- data_science/       # Notebooks, ML models, feature importance
+- requirements.txt    # Python dependencies
 
 How to Run
 
