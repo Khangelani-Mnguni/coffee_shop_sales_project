@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: bi_sales
-    description: "Final dataset for Looker Studio dashboards"
-
-  - name: ml_features
-    description: "Feature dataset for ML models"

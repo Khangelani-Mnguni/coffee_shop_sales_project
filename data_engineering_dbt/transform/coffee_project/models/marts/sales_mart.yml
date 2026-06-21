@@ -1,9 +1,0 @@
-version: 2
-
-models:
-  - name: sales_mart
-    description: "Aggregated sales metrics by date, store, and category"
-
-    columns:
-      - name: total_revenue
-        description: "Total revenue generated"
