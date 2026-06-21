@@ -1,0 +1,149 @@
+version: 2
+
+models:
+  - name: staging_astoria
+    description: "Cleaned and deduplicated transactions for Astoria"
+
+    columns:
+      - name: transaction_id
+        description: "Primary key for transactions"
+        tests:
+          - not_null
+          - unique
+
+      - name: transaction_date
+        description: "Parsed transaction date"
+
+      - name: transaction_time
+        description: "The time of day when the transaction occurred"
+
+      - name: transaction_qty
+        description: "The quantity of products purchased in the transaction"
+
+      - name: store_id
+        description: "Unique identifier for the retail store where the transaction took place"
+
+      - name: store_location
+        description: "The physical location or name of the store"
+
+      - name: product_id
+        description: "Unique identifier for the product sold"
+
+      - name: unit_price
+        description: "Unit price of product"
+
+      - name: unit_price_rand
+        description: "Unit price of product converted to Rand using a fixed exchange rate of 15"
+
+      - name: product_category
+        description: "High-level classification group for the product"
+
+      - name: product_type
+        description: "The specific sub-category or type of the product"
+
+      - name: product_detail
+        description: "Detailed description or name of the product"
+
+      - name: converted_store_location
+        description: "Converted store location for reporting purposes"
+
+      - name: ingestion_timestamp
+        description: "The date and time when this record was loaded into the data warehouse"
+
+      - name: staging_lower_manhattan
+        description: "Cleaned and deduplicated transactions for Lower Manhattan"
+
+        columns:
+          - name: transaction_id
+            description: "Primary key for transactions"
+            tests:
+              - not_null
+              - unique
+
+          - name: transaction_date
+            description: "Parsed transaction date"
+
+          - name: transaction_time
+            description: "The time of day when the transaction occurred"
+
+          - name: transaction_qty
+            description: "The quantity of products purchased in the transaction"
+
+          - name: store_id
+            description: "Unique identifier for the retail store where the transaction took place"
+
+          - name: store_location
+            description: "The physical location or name of the store"
+
+          - name: product_id
+            description: "Unique identifier for the product sold"
+
+          - name: unit_price
+            description: "Unit price of product"
+
+          - name: unit_price_rand
+            description: "Unit price of product converted to Rand"
+
+          - name: product_category
+            description: "High-level classification group for the product"
+
+          - name: product_type
+            description: "The specific sub-category or type of the product"
+
+          - name: product_detail
+            description: "Detailed description or name of the product"
+
+          - name: converted_store_location
+            description: "Converted store location for reporting purposes"
+
+          - name: ingestion_timestamp
+            description: "The date and time when this record was loaded into the data warehouse"
+
+      - name: staging_hells_kitchen
+        description: "Cleaned and deduplicated transactions for Hells Kitchen"
+
+        columns:
+          - name: transaction_id
+            description: "Primary key for transactions"
+            tests:
+              - not_null
+              - unique
+
+          - name: transaction_date
+            description: "Parsed transaction date"
+
+          - name: transaction_time
+            description: "The time of day when the transaction occurred"
+
+          - name: transaction_qty
+            description: "The quantity of products purchased in the transaction"
+
+          - name: store_id
+            description: "Unique identifier for the retail store where the transaction took place"
+
+          - name: store_location
+            description: "The physical location or name of the store"
+
+          - name: product_id
+            description: "Unique identifier for the product sold"
+
+          - name: unit_price
+            description: "Unit price of product"
+
+          - name: unit_price_rand
+            description: "Unit price of product converted to Rand"
+
+          - name: product_category
+            description: "High-level classification group for the product"
+
+          - name: product_type
+            description: "The specific sub-category or type of the product"
+
+          - name: product_detail
+            description: "Detailed description or name of the product"
+
+          - name: converted_store_location
+            description: "Converted store location for reporting purposes"
+
+          - name: ingestion_timestamp
+            description: "The date and time when this record was loaded into the data warehouse"

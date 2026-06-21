@@ -1,12 +1,12 @@
 {{ config(
     materialized='view',
-    alias='staging_lower_manhattan'
+    alias='staging_astoria'
 ) }}
 
 WITH source_data AS (
 
     SELECT *
-    FROM {{ source('raw', 'raw_lower_manhattan') }}
+    FROM {{ source('raw', 'raw_astoria') }}
 
 ),
 
@@ -29,7 +29,7 @@ SELECT
     transaction_qty,
     store_id,
     store_location,
-    "Main Campus" AS converted_store_location,
+    "West Campus" AS converted_store_location,
     product_id,
     unit_price,
     unit_price * 15 AS unit_price_rand,
