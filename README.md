@@ -81,7 +81,7 @@ Install dependencies:
 pip install -r requirements.txt
 
 
-Explore data_engineering scripts (ETL pipelines).
+Explore data_engineering scripts (ETL/ELT pipelines).
 
 Open data_science notebooks for analysis and ML models.
 
