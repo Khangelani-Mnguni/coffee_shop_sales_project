@@ -1,7 +1,6 @@
-Project Overview
-This project is an end-to-end data engineering pipeline for a coffee shop's sales data. It handles both historical data backfilling and scheduled incremental updates. The pipeline extracts, transforms, and loads (ETL) data from raw sources into on-premise databases (MySQL, PostgreSQL) and a cloud data warehouse (BigQuery).
+## Project Overview
 
-To accelerate development, Large Language Models (ChatGPT and Gemini) were leveraged to prototype and generate the core Python scripts.
+This project is an end-to-end data engineering pipeline for a coffee shop's sales data. It handles both historical data backfilling and scheduled incremental updates. The pipeline extracts, transforms, and loads (ETL) data from raw sources into on-premise databases (MySQL, PostgreSQL) and a cloud data warehouse (BigQuery).
 
 Key Features
 Backdating & Historical Load: Python scripts clean and ingest large volumes of historical CSV data into databases.
@@ -14,33 +13,35 @@ Orchestration: Apache Airflow (running in a Docker container on Linux/Ubuntu) is
 
 Business Intelligence: Data is visualized using Power BI (for on-premise MySQL/Postgres data) and Looker Studio (for BigQuery data).
 
-Repository Structure
+# Repository Structure
+
 The repository is structured to clearly separate orchestration, backdating, and scheduled environments:
 
-├── Images/
-├── airflow/
-│   ├── airflow_dag_csv_to_csv.py
-│   ├── airflow_dag_csv_to_mysql.py
-│   └── airflow_dags_mysql_to_postgres.py
-├── backdating/
-│   ├── etl_backdating_bigquery_cloud_run_function.py
-│   ├── etl_backdating_csv_to_csv.py
-│   ├── etl_backdating_csv_to_mysql.py
-│   ├── etl_backdating_mysql_to_postgres.py
-│   └── etl_backdating_synthetic_data_to_mysql.py
-├── data/
-├── development/
-├── scheduled/
-│   ├── scheduled_csv_to_csv.py
-│   ├── scheduled_csv_to_mysql.py
-│   └── scheduled_mysql_to_postgres.py
-├── README.md
-└── requirements.txt
+- Images/
+- airflow/
+  - airflow_dag_csv_to_csv.py
+  - airflow_dag_csv_to_mysql.py
+  - airflow_dags_mysql_to_postgres.py
+- backdating/
+  - etl_backdating_bigquery_cloud_run_function.py
+  - etl_backdating_csv_to_csv.py
+  - etl_backdating_csv_to_mysql.py
+  - etl_backdating_mysql_to_postgres.py
+  - etl_backdating_synthetic_data_to_mysql.py
+- data/
+- development/
+- scheduled/
+  - scheduled_csv_to_csv.py
+  - scheduled_csv_to_mysql.py
+  - scheduled_mysql_to_postgres.py
+- README.md
+- requirements.txt
 
 (Note: System folders like __pycache__ and .DS_Store are present in the repository but typically ignored in version control).
 
-Technologies Used
-Programming & AI: Python, ChatGPT, Gemini
+# Technologies Used
+
+Programming: Python
 
 Databases: MySQL (OLTP), PostgreSQL (OLAP), Google BigQuery
 
@@ -50,7 +51,7 @@ Orchestration & Infrastructure: Apache Airflow, Docker, Linux/Ubuntu
 
 Business Intelligence: Power BI, Looker Studio
 
-How it Works
+# How it Works
 Backdating: Execution of backdating scripts (e.g., etl_backdating_csv_to_mysql.py) reads raw sales data, applies transformations, and bulk-loads it into the databases to establish the baseline dataset.
 
 Scheduled Automation: Scheduled scripts process new records at regular intervals, acting as smaller, efficient versions of the backdating process.
