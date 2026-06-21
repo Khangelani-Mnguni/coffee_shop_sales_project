@@ -6,12 +6,12 @@ def extract_data(input_csv):
     """
     Extracts data from a specified CSV file into a pandas DataFrame.
     """
-    print(f"📥 Extracting data from '{input_csv}'...")
+    print(f"Extracting data from '{input_csv}'...")
     try:
         df = pd.read_csv(input_csv, sep=";")
         return df
     except FileNotFoundError:
-        print(f"❌ Error: The file '{input_csv}' was not found.")
+        print(f"Error: The file '{input_csv}' was not found.")
         return None
 
 def transform_data(df, start_offset_date, end_offset_date):
@@ -23,7 +23,7 @@ def transform_data(df, start_offset_date, end_offset_date):
     - Converting currency
     - Regenerating unique transaction IDs
     """
-    print("🔄 Transforming data...")
+    print("Transforming data...")
 
     # Convert date and time
     df['transaction_date'] = pd.to_datetime(df['transaction_date'], errors='coerce')
@@ -39,7 +39,7 @@ def transform_data(df, start_offset_date, end_offset_date):
     ].copy()
 
     if df_filtered.empty:
-        print(f"⚠ No data found for the range {start_offset_date} to {end_offset_date}.")
+        print(f"No data found for the range {start_offset_date} to {end_offset_date}.")
         return df_filtered
 
     # Format date for output
@@ -76,7 +76,7 @@ def load_data(df_transformed, output_csv, start_offset_date, end_offset_date):
     and ensuring all transaction IDs are unique across the file.
     """
     if df_transformed.empty:
-        print("⚠ No data to load.")
+        print("No data to load.")
         return
 
     # Ensure proper types
@@ -84,7 +84,7 @@ def load_data(df_transformed, output_csv, start_offset_date, end_offset_date):
     df_transformed['transaction_id'] = df_transformed['transaction_id'].astype(str)
 
     if os.path.exists(output_csv):
-        print("📂 Existing data found. Removing old data in the same date range...")
+        print("Existing data found. Removing old data in the same date range...")
         df_existing = pd.read_csv(output_csv)
         df_existing['transaction_date'] = pd.to_datetime(df_existing['transaction_date'])
         df_existing['transaction_id'] = df_existing['transaction_id'].astype(str)
@@ -99,7 +99,7 @@ def load_data(df_transformed, output_csv, start_offset_date, end_offset_date):
         # Append new transformed data
         df_final = pd.concat([df_existing, df_transformed], ignore_index=True)
     else:
-        print("🆕 No existing data. Creating a new file...")
+        print("No existing data. Creating a new file...")
         df_final = df_transformed.copy()
 
     # Keep only unique transaction IDs (final safeguard)
@@ -107,7 +107,7 @@ def load_data(df_transformed, output_csv, start_offset_date, end_offset_date):
     df_final = df_final.sort_values(by=['transaction_date', 'transaction_time'])
 
     df_final.to_csv(output_csv, index=False)
-    print(f"✅ Load complete! Total unique transactions: {df_final['transaction_id'].nunique()}")
+    print(f"Load complete! Total unique transactions: {df_final['transaction_id'].nunique()}")
 
 if __name__ == "__main__":
     input_file = "Coffee Shop Sales2.csv"  # your raw CSV file

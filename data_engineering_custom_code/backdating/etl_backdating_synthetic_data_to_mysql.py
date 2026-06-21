@@ -102,7 +102,7 @@ def generate_synthetic_data(start_date, end_date, num_records_per_day):
         'product_category', 'product_type', 'product_detail'
     ])
 
-    print(f"✅ Data generation complete! Generated {len(df)} records.")
+    print(f"Data generation complete! Generated {len(df)} records.")
     return df
 
 def transform_data(df, start_offset_date, end_offset_date):
@@ -114,7 +114,7 @@ def transform_data(df, start_offset_date, end_offset_date):
     - Converting currency
     - Regenerating unique transaction IDs
     """
-    print("🔄 Transforming data...")
+    print("Transforming data...")
 
     # Convert date and time
     df['transaction_date'] = pd.to_datetime(df['transaction_date'], errors='coerce')
@@ -130,7 +130,7 @@ def transform_data(df, start_offset_date, end_offset_date):
     ].copy()
 
     if df_filtered.empty:
-        print(f"⚠ No data found for the range {start_offset_date} to {end_offset_date}.")
+        print(f"No data found for the range {start_offset_date} to {end_offset_date}.")
         return df_filtered
 
     # Format date for output
@@ -177,7 +177,7 @@ def load_data_to_mysql(df, db_config, table_name, batch_size=5000):
         print("⚠ No data to load to MySQL.")
         return
 
-    print("🚀 Loading data to MySQL...")
+    print("Loading data to MySQL...")
     try:
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
@@ -209,14 +209,14 @@ def load_data_to_mysql(df, db_config, table_name, batch_size=5000):
         # Batch loading
         for i in range(0, num_records, batch_size):
             batch = records[i:i + batch_size]
-            print(f"📦 Loading batch {i // batch_size + 1} of {num_records // batch_size + 1}...")
+            print(f"Loading batch {i // batch_size + 1} of {num_records // batch_size + 1}...")
             cursor.executemany(insert_query, batch)
             conn.commit()
 
-        print(f"✅ Load complete! Inserted/updated {num_records} records.")
+        print(f"Load complete! Inserted/updated {num_records} records.")
 
     except mysql.connector.Error as err:
-        logging.error(f"❌ MySQL Error: {err}")
+        logging.error(f"MySQL Error: {err}")
         if 'conn' in locals() and conn.is_connected():
             conn.rollback()
     finally:
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     db_config = {
         'host': 'localhost',
         'user': 'root',
-        'password': 'Whatsnew2711',
+        'password': 'your_password_here',  # Replace with your actual password
         'database': 'coffee_shop_sales'
     }
 

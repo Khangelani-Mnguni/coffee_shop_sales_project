@@ -30,7 +30,7 @@ def run_daily_incremental():
     """
     df_raw = extract_data(INPUT_FILE)
     if df_raw is None:
-        print("❌ Extraction failed.")
+        print("Extraction failed.")
         return
 
     next_date = get_next_date_to_process(OUTPUT_FILE, df_raw)
@@ -40,19 +40,19 @@ def run_daily_incremental():
 
     last_raw_date = df_raw['transaction_date'].max()
     if next_date > last_raw_date:
-        print("✅ No new data to process. All dates up to latest available are loaded.")
+        print("No new data to process. All dates up to latest available are loaded.")
         return
 
     start_date_str = next_date.strftime('%Y-%m-%d')
     end_date_str = next_date.strftime('%Y-%m-%d')
 
-    print(f"📆 Processing daily backdate for: {start_date_str}")
+    print(f"Processing daily backdate for: {start_date_str}")
 
     # --- Transform and load ---
     df_transformed = transform_data(df_raw, start_date_str, end_date_str)
     if df_transformed.empty:
-        print(f"⚠ No data found for {start_date_str}")
+        print(f"No data found for {start_date_str}")
         return
 
     load_data(df_transformed, OUTPUT_FILE, start_date_str, end_date_str)
-    print(f"✅ Daily backdate for {start_date_str} completed.")
+    print(f"Daily backdate for {start_date_str} completed.")

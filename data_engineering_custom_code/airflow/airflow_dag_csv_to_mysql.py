@@ -14,10 +14,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # -----------------------------
 # MySQL Config
 # -----------------------------
-MYSQL_HOST = "host.docker.internal"  # ✅ Connect to host machine MySQL
+MYSQL_HOST = "host.docker.internal" 
 MYSQL_PORT = 3306
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "Whatsnew2711"
+MYSQL_PASSWORD = "your_mysql_password"  # Replace with your actual password
 MYSQL_DB = "coffee_shop_sales"
 
 # -----------------------------
@@ -34,11 +34,11 @@ def get_mysql_connection():
         )
         return conn
     except mysql.connector.Error as err:
-        logging.error(f"❌ Failed to connect to MySQL: {err}")
+        logging.error(f"Failed to connect to MySQL: {err}")
         raise  # fail the task if connection fails
 
 def get_latest_date_from_mysql():
-    logging.info("🔍 Checking latest date in MySQL...")
+    logging.info("Checking latest date in MySQL...")
     try:
         conn = get_mysql_connection()
         cursor = conn.cursor()
@@ -47,25 +47,25 @@ def get_latest_date_from_mysql():
         cursor.close()
         conn.close()
         if latest_date:
-            logging.info(f"✅ Latest date in DB: {latest_date}")
+            logging.info(f"Latest date in DB: {latest_date}")
         else:
             logging.warning("⚠ No data in DB, starting from default date.")
         return latest_date
     except mysql.connector.Error as err:
-        logging.error(f"❌ Failed to retrieve latest date: {err}")
+        logging.error(f"Failed to retrieve latest date: {err}")
         raise
 
 def extract_data(input_csv):
-    logging.info(f"📥 Extracting data from '{input_csv}'...")
+    logging.info(f"Extracting data from '{input_csv}'...")
     try:
         df = pd.read_csv(input_csv, sep=";")
         return df
     except FileNotFoundError:
-        logging.error(f"❌ File not found: {input_csv}")
+        logging.error(f"File not found: {input_csv}")
         return None
 
 def transform_data(df, start_date_str, end_date_str):
-    logging.info(f"🔄 Transforming data for {start_date_str} to {end_date_str}...")
+    logging.info(f"Transforming data for {start_date_str} to {end_date_str}...")
     df['transaction_date'] = pd.to_datetime(df['transaction_date'], errors='coerce')
     df['transaction_time'] = pd.to_datetime(df['transaction_time'], errors='coerce').dt.strftime('%H:%M:%S')
 
@@ -111,7 +111,7 @@ def load_data_to_mysql(df, table_name):
         logging.warning("⚠ No data to load to MySQL.")
         return
 
-    logging.info("🚀 Loading data to MySQL...")
+    logging.info("Loading data to MySQL...")
     conn = get_mysql_connection()
     cursor = conn.cursor()
 
@@ -137,7 +137,7 @@ def load_data_to_mysql(df, table_name):
     """
     cursor.executemany(insert_query, records)
     conn.commit()
-    logging.info(f"✅ Inserted/updated {cursor.rowcount} records.")
+    logging.info(f"Inserted/updated {cursor.rowcount} records.")
 
     cursor.close()
     conn.close()
@@ -156,7 +156,7 @@ def run_daily_etl():
     else:
         date_to_process = '2025-01-01'
 
-    logging.info(f"📆 Processing date: {date_to_process}")
+    logging.info(f"Processing date: {date_to_process}")
 
     df_raw = extract_data(input_file)
     if df_raw is not None:
