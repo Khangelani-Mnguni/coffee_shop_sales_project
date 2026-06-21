@@ -1,0 +1,90 @@
+version: 2
+
+models:
+  - name: int_sales
+    description: "Aggregated sales metrics by date, store, and category"
+
+    columns:
+
+      - name: transaction_id
+        description: "Unique identifier for each sales transaction record."
+
+      - name: transaction_date
+        description: "Parsed transaction date"
+
+      - name: year
+        description: "Year extracted from the transaction date"
+
+      - name: month
+        description: "Month extracted from the transaction date"
+
+      - name: day
+        description: "Day extracted from the transaction date"
+
+      - name: day_of_week
+        description: "Day of the week extracted from the transaction date"
+
+      - name: transaction_qty
+        description: "The quantity of products purchased in the transaction"
+
+      - name: store_location
+        description: "The physical location or name of the store"
+
+      - name: unit_price
+        description: "Unit price of product in Rand"
+
+      - name: total_revenue
+        description: "Total revenue generated from the transaction, calculated as unit price multiplied by quantity"
+
+      - name: product_category
+        description: "High-level classification group for the product"
+
+      - name: product_type
+        description: "The specific sub-category or type of the product"
+
+      - name: product_detail
+        description: "Detailed description or name of the product"
+
+      - name: converted_store_location
+        description: "Converted store location for reporting purposes"
+
+      - name: ingestion_timestamp
+        description: "The date and time when this record was loaded into the data warehouse"
+
+  - name: int_combined_stores
+    description: "Aggregated sales metrics by date, store, and category"
+
+    columns:
+
+      - name: transaction_id
+        description: "Unique identifier for each sales transaction record."
+
+      - name: transaction_date
+        description: "Parsed transaction date"
+
+      - name: transaction_qty
+        description: "The quantity of products purchased in the transaction"
+
+      - name: store_location
+        description: "The physical location or name of the store"
+
+      - name: unit_price
+        description: "Unit price of product in Rand"
+
+      - name: total_revenue
+        description: "Total revenue generated from the transaction, calculated as unit price multiplied by quantity"
+
+      - name: product_category
+        description: "High-level classification group for the product"
+
+      - name: product_type
+        description: "The specific sub-category or type of the product"
+
+      - name: product_detail
+        description: "Detailed description or name of the product"
+
+      - name: converted_store_location
+        description: "Converted store location for reporting purposes"
+
+      - name: ingestion_timestamp
+        description: "The date and time when this record was loaded into the data warehouse"
