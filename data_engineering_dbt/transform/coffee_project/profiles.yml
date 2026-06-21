@@ -3,16 +3,14 @@ coffee_project:
   outputs:
     dev:
       type: bigquery
-      method: service-account
+      method: oauth
       project: coffee-shop-updated
       dataset: coffee_dev
       threads: 4
-      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
 
     prod:
       type: bigquery
-      method: service-account
+      method: oauth
       project: coffee-shop-updated
       dataset: coffee_prod
       threads: 4
-      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
