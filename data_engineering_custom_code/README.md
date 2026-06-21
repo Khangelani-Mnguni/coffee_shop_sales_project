@@ -1,4 +1,4 @@
-## Project Overview
+# Project Overview
 
 This project is an end-to-end data engineering pipeline for a coffee shop's sales data. It handles both historical data backfilling and scheduled incremental updates. The pipeline extracts, transforms, and loads (ETL) data from raw sources into on-premise databases (MySQL, PostgreSQL) and a cloud data warehouse (BigQuery).
 
@@ -13,7 +13,7 @@ Orchestration: Apache Airflow (running in a Docker container on Linux/Ubuntu) is
 
 Business Intelligence: Data is visualized using Power BI (for on-premise MySQL/Postgres data) and Looker Studio (for BigQuery data).
 
-# Repository Structure
+## Repository Structure
 
 The repository is structured to clearly separate orchestration, backdating, and scheduled environments:
 
@@ -39,7 +39,7 @@ The repository is structured to clearly separate orchestration, backdating, and 
 
 (Note: System folders like __pycache__ and .DS_Store are present in the repository but typically ignored in version control).
 
-# Technologies Used
+## Technologies Used
 
 Programming: Python
 
@@ -51,7 +51,8 @@ Orchestration & Infrastructure: Apache Airflow, Docker, Linux/Ubuntu
 
 Business Intelligence: Power BI, Looker Studio
 
-# How it Works
+## How it Works
+
 Backdating: Execution of backdating scripts (e.g., etl_backdating_csv_to_mysql.py) reads raw sales data, applies transformations, and bulk-loads it into the databases to establish the baseline dataset.
 
 Scheduled Automation: Scheduled scripts process new records at regular intervals, acting as smaller, efficient versions of the backdating process.
@@ -60,7 +61,8 @@ Cloud Pipeline: An upload to a designated GCS bucket triggers a Cloud Run functi
 
 Dashboards: Looker Studio connects directly to BigQuery for highly scalable analytics, while Power BI hooks into the on-premise PostgreSQL/MySQL databases for transaction-level metrics.
 
-Future Enhancements
+## Future Enhancements
+
 Implement a robust error-handling and logging system across all ETL scripts.
 
 Set up a data quality monitoring framework to ensure accuracy and consistency at each pipeline stage.
