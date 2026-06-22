@@ -534,8 +534,3 @@ airflow dags trigger coffee_pipeline
 - Data freshness monitoring
 - Automated anomaly detection
 - Additional store locations
-- Data observability framework
-- Feature store for machine learning
-- Automated data quality alerting
-- Enhanced CI/CD validation checks
-- Data lineage monitoring
