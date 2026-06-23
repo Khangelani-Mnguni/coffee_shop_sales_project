@@ -4,7 +4,7 @@
 
 This module is responsible for loading raw coffee shop transaction data into BigQuery.
 
-The ingestion framework uses a custom [Python CLI](#running-ingestion) to load source CSV files into the raw BigQuery layer before downstream transformations are performed by [dbt](../coffee_project/README.md).
+The ingestion framework uses a custom [Python CLI](#running-ingestion) to load source CSV files into the raw BigQuery layer before downstream transformations are performed by dbt.
 
 ### Related Sections
 
@@ -47,11 +47,11 @@ data/
 
 ### Store Coverage
 
-| File | Store |
-|--------|--------|
-| Astoria.csv | Astoria |
-| Hells_Kitchen.csv | Hells Kitchen |
-| Lower_Manhattan.csv | Lower Manhattan |
+| File | Store | Mapped Store |
+|--------|--------|--------|
+| Astoria.csv | Astoria | West Campus |
+| Hells_Kitchen.csv | Hells Kitchen | East Campus |
+| Lower_Manhattan.csv | Lower Manhattan | Main Campus |
 
 ---
 
@@ -224,12 +224,3 @@ bq ls
 ```
 
 ---
-
-# Future Enhancements
-
-- Incremental ingestion support
-- Automated schema evolution
-- Source file validation
-- Data quality checks before loading
-- Automated ingestion logging
-- Error notification framework
