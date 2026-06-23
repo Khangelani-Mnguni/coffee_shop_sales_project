@@ -27,7 +27,7 @@ Looker Studio (BigQuery data warehouse).
 
 LLM-Accelerated Development: Scripts were rapidly prototyped using ChatGPT and Gemini.
 
-# Data Science
+# Data Analytics
 
 Data Preparation: Extracted Postgres views into pandas, cleaned and engineered features.
 
