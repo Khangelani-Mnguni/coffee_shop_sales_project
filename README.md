@@ -18,7 +18,6 @@ The outcome is a robust infrastructure for ongoing analytics and actionable busi
 * **Dashboards:**
   * **Power BI:** Sourced from on-premise MySQL/Postgres data.
   * **Looker Studio:** Sourced from BigQuery data warehouse.
-* **LLM-Accelerated Development:** Scripts were rapidly prototyped using ChatGPT and Gemini.
 
 ---
 
@@ -87,4 +86,4 @@ coffee_shop_sales_project/
 ## Author
 
 **Khangelani Mnguni**  
-*Business Intelligence Analyst | Aspiring Data Scientist*
+*Business Intelligence Analyst | Aspiring Data Engineer*
